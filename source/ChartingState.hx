@@ -8,6 +8,9 @@ import Section.SwagSection;
 import Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxTimer;
+import flixel.tweens.FlxTween;
+
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
@@ -189,6 +192,16 @@ class ChartingState extends MusicBeatState
 		UI_box.resize(300, 400);
 		UI_box.x = FlxG.width / 2;
 		UI_box.y = 20;
+
+		var warning:FlxText = new FlxText(5, FlxG.height - 42, 0, "Warning: Save your Chart", 12);
+		warning.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.RED, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
+		warning.scrollFactor.set();
+		add(warning);
+
+		new FlxTimer().start(1, function (tmrr:FlxTimer)
+			{
+				FlxTween.tween(warning, {alpha: 0}, 1, {type:PINGPONG});
+			});
 
 		var text:String =
 		"W/S or Mouse Wheel - You will move the time box.

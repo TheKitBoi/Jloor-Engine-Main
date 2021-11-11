@@ -83,7 +83,14 @@ class MainMenuState extends MusicBeatState
 		magenta.antialiasing = true;
 		magenta.color = 0xFFfd719b;
 		add(magenta);
-		// magenta.scrollFactor.set();
+		
+		boxMain = new FlxSprite(-62, 552);
+		boxMain.frames = Paths.getSparrowAtlas('boxMain', 'shared');
+		boxMain.animation.addByPrefix('idle', 'beat', 15, true);
+		boxMain.animation.play('idle');
+		boxMain.antialiasing = true;
+		boxMain.scale.set(0.55, 0.55);
+		add(boxMain);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
@@ -116,19 +123,12 @@ class MainMenuState extends MusicBeatState
 
 		//FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		boxMain = new FlxSprite(5, 42);
-		boxMain.frames = Paths.getSparrowAtlas('boxMain', 'shared');
-		boxMain.animation.addByPrefix('idle', 'beat', 24, true);
-		boxMain.animation.play('idle');
-		boxMain.antialiasing = true;
-		add(boxMain);
-
-		var versionEngine:FlxText = new FlxText(5, FlxG.height - 42, 0, "Jloor Engine v0.0.1", 12);
+		var versionEngine:FlxText = new FlxText(132, FlxG.height - 50, 0, "Jloor Engine v0.0.1", 12);
 		versionEngine.scrollFactor.set();
 		versionEngine.setFormat("VCR OSD Mono", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionEngine);
 
-		var versionFNF:FlxText = new FlxText(5, FlxG.height - 20, 0, "Friday Nihgt Funkin' v0.2.7", 12);
+		var versionFNF:FlxText = new FlxText(132, FlxG.height - 30, 0, "Friday Nihgt Funkin' v0.2.7", 12);
 		versionFNF.scrollFactor.set();
 		versionFNF.setFormat("VCR OSD Mono", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionFNF);

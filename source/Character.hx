@@ -15,6 +15,7 @@ class Character extends FlxSprite
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 	public var iconColor:String = "FF50a5eb";
+	public var noteSkin:String = 'normal';
 
 	public var holdTimer:Float = 0;
 
@@ -32,6 +33,7 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			case 'gf':
+				noteSkin = 'normal';
 				// GIRLFRIEND CODE
 				iconColor = 'FFa5004d';
 				tex = Paths.getSparrowAtlas('characters/GF_assets');
@@ -126,6 +128,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'dad':
+				noteSkin = 'normal';
 				// DAD ANIMATION LOADING CODE
 				iconColor = 'FFaf66ce';
 				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST', 'shared');
@@ -144,6 +147,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'spooky':
+				noteSkin = 'normal';
 				iconColor = 'FFd57e00';
 				tex = Paths.getSparrowAtlas('characters/spooky_kids_assets');
 				frames = tex;
@@ -164,6 +168,7 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 			case 'mom':
+				noteSkin = 'normal';
 				iconColor = 'FFd8558e';
 				tex = Paths.getSparrowAtlas('characters/Mom_Assets');
 				frames = tex;
@@ -185,6 +190,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'mom-car':
+				noteSkin = 'normal';
 				iconColor = 'FFd8558e';
 				tex = Paths.getSparrowAtlas('characters/momCar');
 				frames = tex;
@@ -203,6 +209,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'monster':
+				noteSkin = 'normal';
 				iconColor = 'FFf3ff6e';
 				tex = Paths.getSparrowAtlas('characters/Monster_Assets');
 				frames = tex;
@@ -219,6 +226,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
 			case 'monster-christmas':
+				noteSkin = 'normal';
 				iconColor = 'FFf3ff6e';
 				tex = Paths.getSparrowAtlas('characters/monsterChristmas');
 				frames = tex;
@@ -235,6 +243,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -40, -94);
 				playAnim('idle');
 			case 'pico':
+				noteSkin = 'normal';
 				iconColor = 'FFb7d855';
 				tex = Paths.getSparrowAtlas('characters/Pico_FNF_assetss');
 				frames = tex;
@@ -275,6 +284,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf':
+				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
 				frames = tex;
@@ -318,6 +328,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-christmas':
+				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
 				var tex = Paths.getSparrowAtlas('characters/bfChristmas');
 				frames = tex;
@@ -347,6 +358,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-car':
+				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
 				var tex = Paths.getSparrowAtlas('characters/bfCar');
 				frames = tex;
@@ -373,6 +385,7 @@ class Character extends FlxSprite
 
 				flipX = true;
 			case 'bf-pixel':
+				//noteSkin = 'normal';
 				iconColor = 'FF00d8f9';
 				frames = Paths.getSparrowAtlas('characters/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -408,6 +421,7 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			case 'bf-pixel-opponent':
+				noteSkin = 'normal';
 				iconColor = 'FF00d8f9';
 				frames = Paths.getSparrowAtlas('characters/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -460,6 +474,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'senpai':
+				//noteSkin = 'normal';
 				iconColor = 'FFffaa6f';
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				animation.addByPrefix('idle', 'Senpai Idle', 24, false);
@@ -481,6 +496,7 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 			case 'senpai-angry':
+				//noteSkin = 'normal';
 				iconColor = 'FFffaa6f';
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
@@ -502,6 +518,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'spirit':
+				//noteSkin = 'normal';
 				iconColor = 'FFff3c6e';
 				frames = Paths.getPackerAtlas('characters/spirit');
 				animation.addByPrefix('idle', "idle spirit_", 24, false);
@@ -524,6 +541,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'parents-christmas':
+				noteSkin = 'normal';
 				iconColor = 'FFaf66ce';
 				frames = Paths.getSparrowAtlas('characters/mom_dad_christmas_assets');
 				animation.addByPrefix('idle', 'Parent Christmas Idle', 24, false);

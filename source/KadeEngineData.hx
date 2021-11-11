@@ -21,9 +21,6 @@ class KadeEngineData
 		if (FlxG.save.data.offset == null)
 			FlxG.save.data.offset = 0;
 
-		if (FlxG.save.data.songPosition == null)
-			FlxG.save.data.songPosition = false;
-
 		if (FlxG.save.data.fps == null)
 			FlxG.save.data.fps = false;
 
@@ -87,6 +84,9 @@ class KadeEngineData
 
 		if (FlxG.save.data.scoreScreen == null)
 			FlxG.save.data.scoreScreen = true;
+
+		if (FlxG.save.data.timeSong == null)
+			FlxG.save.data.timeSong = true;
 
 		if (FlxG.save.data.inputShow == null)
 			FlxG.save.data.inputShow = false;

@@ -181,7 +181,7 @@ class AccuracyOption extends Option
 	}
 }
 
-class SongPositionOption extends Option
+class TimeSong extends Option
 {
 	public function new(desc:String)
 	{
@@ -190,14 +190,14 @@ class SongPositionOption extends Option
 	}
 	public override function press():Bool
 	{
-		FlxG.save.data.songPosition = !FlxG.save.data.songPosition;
+		FlxG.save.data.timeSong = !FlxG.save.data.timeSong;
 		display = updateDisplay();
 		return true;
 	}
 
 	private override function updateDisplay():String
 	{
-		return "Song Position " + (!FlxG.save.data.songPosition ? "off" : "on");
+		return "Song Time " + (!FlxG.save.data.timeSong ? "off" : "on");
 	}
 }
 
@@ -542,7 +542,7 @@ class Fullscreen extends Option
 
 	private override function updateDisplay():String
 	{
-		return "Fullscren " + (!FlxG.fullscreen ? "OFF" : "ON");
+		return "Fullscren " + (!FlxG.fullscreen ? "off" : "on");
 	}
 }
 

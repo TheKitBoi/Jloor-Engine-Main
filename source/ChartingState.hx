@@ -8,9 +8,6 @@ import Section.SwagSection;
 import Song.SwagSong;
 import flixel.FlxG;
 import flixel.FlxSprite;
-import flixel.util.FlxTimer;
-import flixel.tweens.FlxTween;
-
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.ui.FlxInputText;
 import flixel.addons.ui.FlxUI9SliceSprite;
@@ -100,6 +97,7 @@ class ChartingState extends MusicBeatState
 	var claps:Array<Note> = [];
 
 	public var snapText:FlxText;
+	public static var effectsMode:Bool = false;
 
 	override function create()
 	{
@@ -123,14 +121,15 @@ class ChartingState extends MusicBeatState
 				validScore: false
 			};
 		}
-
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.scrollFactor.set();
-		bg.color = 0xFF222222;
-		add(bg);
-
+		if (effectsMode == true)
+			_song = PlayState.effectSONG;
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
+
+		var blackBorder:FlxSprite = new FlxSprite(60,10).makeGraphic(120,100,FlxColor.BLACK);
+		blackBorder.scrollFactor.set();
+
+		blackBorder.alpha = 0.3;
 
 		snapText = new FlxText(60,10,0,"Snap: 1/" + snap + " (Press Control to unsnap the cursor)\nAdd Notes: 1-8 (or click)\n", 14);
 		snapText.scrollFactor.set();
@@ -142,7 +141,7 @@ class ChartingState extends MusicBeatState
 		curRenderedSustains = new FlxTypedGroup<FlxSprite>();
 
 		FlxG.mouse.visible = true;
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		FlxG.save.bind('funkin', 'bobandbosip');
 
 		tempBpm = _song.bpm;
 
@@ -192,32 +191,6 @@ class ChartingState extends MusicBeatState
 		UI_box.resize(300, 400);
 		UI_box.x = FlxG.width / 2;
 		UI_box.y = 20;
-
-		var warning:FlxText = new FlxText(5, FlxG.height - 42, 0, "Warning: Save your Chart", 12);
-		warning.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.RED, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
-		warning.scrollFactor.set();
-		add(warning);
-
-		new FlxTimer().start(1, function (tmrr:FlxTimer)
-			{
-				FlxTween.tween(warning, {alpha: 0}, 1, {type:PINGPONG});
-			});
-
-		var text:String =
-		"W/S or Mouse Wheel - You will move the time box.
-		\nA or Left/D or Right - Go to the previous/next section.
-		\nEnter - Play your chart in Game.
-		\nSpace - Stop/Resume song.";
-
-		var tipTextArray:Array<String> = text.split('\n');
-		for (i in 0...tipTextArray.length) {
-			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 18);
-			tipText.y += i * 14;
-			tipText.setFormat(Paths.font("vcr.ttf"), 19, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*/);
-			//tipText.borderSize = 2;
-			tipText.scrollFactor.set();
-			add(tipText);
-		}
 		add(UI_box);
 
 		addSongUI();
@@ -227,6 +200,7 @@ class ChartingState extends MusicBeatState
 		add(curRenderedNotes);
 		add(curRenderedSustains);
 
+		add(blackBorder);
 		add(snapText);
 
 
@@ -273,6 +247,12 @@ class ChartingState extends MusicBeatState
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
 			loadJson(_song.song.toLowerCase());
+		});
+
+		
+		var reloadEffectsJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 100, "Reload EFFECTS", function()
+		{
+			loadEffects(_song.song.toLowerCase());
 		});
 
 		
@@ -391,6 +371,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
+		tab_group_song.add(reloadEffectsJson);
 		tab_group_song.add(loadAutosaveBtn);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperBPMLabel);
@@ -470,6 +451,38 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 		});
+		var turntoDuet:FlxButton = new FlxButton(10, 190, "make duet", function()
+		{
+			for (i in 0..._song.notes[curSection].sectionNotes.length)
+			{
+				_song.notes[curSection].sectionNotes[i][3] = 'duet';
+				updateGrid();
+			}
+		});
+		var turntoCerb:FlxButton = new FlxButton(10, 210, "make cerb", function()
+		{
+			for (i in 0..._song.notes[curSection].sectionNotes.length)
+			{
+				_song.notes[curSection].sectionNotes[i][3] = 'cerb';
+				updateGrid();
+			}
+		});
+
+		var turnBFtoBF:FlxButton = new FlxButton(10, 240, "make bf to bf (real)", function()
+		{
+			for (i in 0..._song.notes[curSection].sectionNotes.length)
+			{
+				if (_song.notes[curSection].mustHitSection) {
+					if (_song.notes[curSection].sectionNotes[i][1] <= 3 && _song.notes[curSection].sectionNotes[i][1] >= 0)
+						_song.notes[curSection].sectionNotes[i][3] = 'normal';
+				} else {
+					if (_song.notes[curSection].sectionNotes[i][1] >= 4)
+						_song.notes[curSection].sectionNotes[i][3] = 'normal';
+				}
+				
+				updateGrid();
+			}
+		});
 		check_mustHitSection = new FlxUICheckBox(10, 30, null, null, "Camera Points to P1?", 100);
 		check_mustHitSection.name = 'check_mustHit';
 		check_mustHitSection.checked = true;
@@ -492,6 +505,9 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(copyButton);
 		tab_group_section.add(clearSectionButton);
 		tab_group_section.add(swapSection);
+		tab_group_section.add(turntoDuet);
+		tab_group_section.add(turntoCerb);
+		tab_group_section.add(turnBFtoBF);
 
 		UI_box.addGroup(tab_group_section);
 	}
@@ -542,11 +558,16 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.stop();
 			// vocals.stop();
 		}
-
-		FlxG.sound.playMusic(Paths.inst(daSong), 0.6);
+		if (PlayState.storyDifficulty == 3)
+			FlxG.sound.playMusic(Paths.inst(daSong), 0.6);
+		else
+			FlxG.sound.playMusic(Paths.inst(daSong), 0.6);
 
 		// WONT WORK FOR TUTORIAL OR TEST SONG!!! REDO LATER
-		vocals = new FlxSound().loadEmbedded(Paths.voices(daSong));
+		if (PlayState.storyDifficulty == 3)
+			vocals = new FlxSound().loadEmbedded(Paths.voices(daSong));
+		else
+			vocals = new FlxSound().loadEmbedded(Paths.voices(daSong));
 		FlxG.sound.list.add(vocals);
 
 		FlxG.sound.music.pause();
@@ -898,7 +919,8 @@ class ChartingState extends MusicBeatState
 		{
 			lastSection = curSection;
 
-			PlayState.SONG = _song;
+			if (FlxG.keys.pressed.SHIFT)
+				PlayState.effectSONG = _song;
 			FlxG.sound.music.stop();
 			vocals.stop();
 			LoadingState.loadAndSwitchState(new PlayState());
@@ -1054,7 +1076,7 @@ class ChartingState extends MusicBeatState
 			+ Std.string(FlxMath.roundDecimal(FlxG.sound.music.length / 1000, 2))
 			+ "\nSection: "
 			+ curSection 
-			+ "\nStepHit: " 
+			+ "\nCurStep: " 
 			+ curStep;
 		super.update(elapsed);
 	}
@@ -1266,8 +1288,8 @@ class ChartingState extends MusicBeatState
 			var daNoteInfo = i[1];
 			var daStrumTime = i[0];
 			var daSus = i[2];
-
-			var note:Note = new Note(daStrumTime, daNoteInfo % 4,null,false,true);
+			var daType = i[3];
+			var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType);
 			note.sustainLength = daSus;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
@@ -1421,11 +1443,34 @@ class ChartingState extends MusicBeatState
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
 		var noteSus = 0;
+		var noteType = 'normal';
+		if (FlxG.keys.pressed.M)
+			noteType = 'drop';
+		if (FlxG.keys.pressed.N)
+			noteType = 'are';
+		if (FlxG.keys.pressed.B)
+			noteType = 'you';
+		if (FlxG.keys.pressed.V)
+			noteType = 'ready';
+		if (FlxG.keys.pressed.C)
+			noteType = 'kill';
+		if (FlxG.keys.pressed.X)
+			noteType = 'cerb';
+		if (FlxG.keys.pressed.Z)
+			noteType = 'duet';
+		if (FlxG.keys.pressed.K)
+			noteType = '4';
+		if (FlxG.keys.pressed.J)
+			noteType = '5';
+		if (FlxG.keys.pressed.H)
+			noteType = '6';
+		if (FlxG.keys.pressed.G)
+			noteType = '7';
 
 		if (n != null)
-			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength]);
+			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteType]);
 		else
-			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus]);
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteType]);
 
 		var thingy = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 
@@ -1492,6 +1537,13 @@ class ChartingState extends MusicBeatState
 	function loadJson(song:String):Void
 	{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+		LoadingState.loadAndSwitchState(new ChartingState());
+	}
+
+	function loadEffects(song:String):Void
+	{
+		//PlayState.SONG = Song.loadFromJson('effects-ex', song.toLowerCase());
+		effectsMode = true;
 		LoadingState.loadAndSwitchState(new ChartingState());
 	}
 

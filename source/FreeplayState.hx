@@ -11,6 +11,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 import lime.utils.Assets;
 import Conductor.BPMChangeEvent;
 import Song.SwagSong;
@@ -128,32 +129,15 @@ class FreeplayState extends MusicBeatState
 		changeSelection();
 		changeDiff();
 
-		// FlxG.sound.playMusic(Paths.music('title'), 0);
-		// FlxG.sound.music.fadeIn(2, 0, 0.8);
+		//FlxG.sound.playMusic(Paths.music('title'), 0);
+		//FlxG.sound.music.fadeIn(2, 0, 0.8);
 		selector = new FlxText();
 
 		selector.size = 40;
 		selector.text = ">";
-		// add(selector);
+		//add(selector);
 
 		var swag:Alphabet = new Alphabet(1, 0, "swag");
-
-		// JUST DOIN THIS SHIT FOR TESTING!!!
-		/* 
-			var md:String = Markdown.markdownToHtml(Assets.getText('CHANGELOG.md'));
-
-			var texFel:TextField = new TextField();
-			texFel.width = FlxG.width;
-			texFel.height = FlxG.height;
-			// texFel.
-			texFel.htmlText = md;
-
-			FlxG.stage.addChild(texFel);
-
-			// scoreText.textField.htmlText = md;
-
-			trace(md);
-		 */
 
 		super.create();
 	}
@@ -221,16 +205,33 @@ class FreeplayState extends MusicBeatState
 
 		if (accepted)
 		{
-			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			FlxG.sound.play(Paths.sound('confirmMenu'));
 
-			trace(poop);
-			
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
-			PlayState.storyWeek = songs[curSelected].week;
-			trace('CUR WEEK' + PlayState.storyWeek);
-			LoadingState.loadAndSwitchState(new PlayState());
+		new FlxTimer().start(0.6, function (tmrr:FlxTimer)
+			{
+				for (x in 0...grpSongs.length)
+					{
+						FlxTween.tween(grpSongs.members[x], {x: grpSongs.members[x].x - 400}, 0.5, {ease: FlxEase.backIn});
+						FlxTween.tween(grpSongs.members[x], {alpha: 0.0}, 0.5, {ease: FlxEase.quadIn});
+					}
+
+				for (x in 0...iconArray.length)
+					{
+						FlxTween.tween(iconArray[x], {x: iconArray[x].x - 400}, 0.5, {ease: FlxEase.backIn});
+						FlxTween.tween(iconArray[x], {alpha: 0.0}, 0.5, {ease: FlxEase.quadIn});
+					}
+
+				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+
+				trace(poop);
+				
+				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				PlayState.isStoryMode = false;
+				PlayState.storyDifficulty = curDifficulty;
+				PlayState.storyWeek = songs[curSelected].week;
+				trace('CUR WEEK' + PlayState.storyWeek);
+				LoadingState.loadAndSwitchState(new PlayState());
+			});
 		}
 	}
 
@@ -250,13 +251,13 @@ class FreeplayState extends MusicBeatState
 		switch (curDifficulty)
 		{
 			case 0:
-				diffText.text = "EASY";
+				diffText.text = "< EASY >";
 				diffText.color = FlxColor.LIME;
 			case 1:
-				diffText.text = 'NORMAL';
+				diffText.text = '< NORMAL >';
 				diffText.color = FlxColor.YELLOW;
 			case 2:
-				diffText.text = "HARD";
+				diffText.text = "< HARD >";
 				diffText.color = FlxColor.RED;
 		}
 	}

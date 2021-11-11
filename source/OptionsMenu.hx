@@ -46,7 +46,7 @@ class OptionsMenu extends MusicBeatState
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new SongPositionOption("Show the songs current position (as a bar)"),
+			new TimeSong("You can see how long the selected song will last."),
 			new CpuStrums("CPU's strumline lights up when a note hits it."),
 			#end
 		]),
@@ -85,6 +85,8 @@ class OptionsMenu extends MusicBeatState
 		menuBG.screenCenter();
 		menuBG.antialiasing = true;
 		add(menuBG);
+
+		FlxG.sound.playMusic(Paths.music('optionsMenu'), 1);
 
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);

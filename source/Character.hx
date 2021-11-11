@@ -421,13 +421,13 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			case 'bf-pixel-opponent':
-				noteSkin = 'normal';
+				//noteSkin = 'normal';
 				iconColor = 'FF00d8f9';
 				frames = Paths.getSparrowAtlas('characters/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
 				animation.addByPrefix('singUP', 'BF UP NOTE', 24, false);
-				animation.addByPrefix('singLEFT', 'BF LEFT NOTE', 24, false);
-				animation.addByPrefix('singRIGHT', 'BF RIGHT NOTE', 24, false);
+				animation.addByPrefix('singLEFT', 'BF RIGHT NOTE', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF LEFT NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'BF DOWN NOTE', 24, false);
 				animation.addByPrefix('singUPmiss', 'BF UP MISS', 24, false);
 				animation.addByPrefix('singLEFTmiss', 'BF LEFT MISS', 24, false);

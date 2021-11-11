@@ -388,7 +388,7 @@ class TitleState extends MusicBeatState
 			case 5:
 				createCoolText(['Jloor Engine', 'by']);
 			case 7:
-				addMoreText('Jloor');
+				addMoreText('Jloor and Manux');
 			case 8:
 				deleteCoolText();
 				ngSpr.visible = false;

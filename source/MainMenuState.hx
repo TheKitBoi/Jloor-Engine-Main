@@ -44,6 +44,7 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
+	var boxMain:FlxSprite;
 	public static var finishedFunnyMove:Bool = false;
 
 	override function create()
@@ -113,7 +114,14 @@ class MainMenuState extends MusicBeatState
 
 		firstStart = false;
 
-		FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
+		//FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
+
+		boxMain = new FlxSprite(5, 42);
+		boxMain.frames = Paths.getSparrowAtlas('boxMain', 'shared');
+		boxMain.animation.addByPrefix('idle', 'beat', 24, true);
+		boxMain.animation.play('idle');
+		boxMain.antialiasing = true;
+		add(boxMain);
 
 		var versionEngine:FlxText = new FlxText(5, FlxG.height - 42, 0, "Jloor Engine v0.0.1", 12);
 		versionEngine.scrollFactor.set();

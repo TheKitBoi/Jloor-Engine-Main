@@ -115,6 +115,20 @@ class Paths
 		return 'songs:assets/songs/${songLowercase}/Inst.$SOUND_EXT';
 	}
 
+	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+	{
+		#if MODS_ALLOWED
+		if(FileSystem.exists(mods(currentModDirectory + '/' + key)) || FileSystem.exists(mods(key))) {
+			return true;
+		}
+		#end
+		
+		if(OpenFlAssets.exists(Paths.getPath(key, type, library))) {
+			return true;
+		}
+		return false;
+	}
+
 	inline static public function image(key:String, ?library:String)
 	{
 		return getPath('images/$key.png', IMAGE, library);

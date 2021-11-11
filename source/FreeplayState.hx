@@ -81,6 +81,8 @@ class FreeplayState extends MusicBeatState
 
 		// LOAD MUSIC
 
+		addSong('Test', -99, 'bf-pixel-opponent');
+
 		// LOAD CHARACTERS
 
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));

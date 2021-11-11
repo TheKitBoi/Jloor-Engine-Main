@@ -178,7 +178,7 @@ class PlayState extends MusicBeatState
 	var trainSound:FlxSound;
 
 	var limo:FlxSprite;
-	var grpLimoDancers:FlxTypedGroup<BackgroundDancer>;
+	var grpLimoDancers:FlxTypedGroup<gameplay.BackgroundDancer>;
 	var fastCar:FlxSprite;
 	var songName:FlxText;
 	var upperBoppers:FlxSprite;
@@ -187,7 +187,7 @@ class PlayState extends MusicBeatState
 
 	var fc:Bool = true;
 
-	var bgGirls:BackgroundGirls;
+	var bgGirls:gameplay.BackgroundGirls;
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 
 	var talking:Bool = true;
@@ -237,6 +237,7 @@ class PlayState extends MusicBeatState
 
 	override public function create()
 	{
+		FlxG.mouse.visible = false;
 		instance = this;
 		
 		if (FlxG.save.data.fpsCap > 290)
@@ -467,12 +468,12 @@ class PlayState extends MusicBeatState
 					bgLimo.scrollFactor.set(0.4, 0.4);
 					add(bgLimo);
 					if(FlxG.save.data.distractions){
-						grpLimoDancers = new FlxTypedGroup<BackgroundDancer>();
+						grpLimoDancers = new FlxTypedGroup<gameplay.BackgroundDancer>();
 						add(grpLimoDancers);
 	
 						for (i in 0...5)
 						{
-								var dancer:BackgroundDancer = new BackgroundDancer((370 * i) + 130, bgLimo.y - 400);
+								var dancer:gameplay.BackgroundDancer = new gameplay.BackgroundDancer((370 * i) + 130, bgLimo.y - 400);
 								dancer.scrollFactor.set(0.4, 0.4);
 								grpLimoDancers.add(dancer);
 						}
@@ -638,7 +639,7 @@ class PlayState extends MusicBeatState
 					bgTrees.updateHitbox();
 					treeLeaves.updateHitbox();
 
-					bgGirls = new BackgroundGirls(-100, 190);
+					bgGirls = new gameplay.BackgroundGirls(-100, 190);
 					bgGirls.scrollFactor.set(0.9, 0.9);
 
 					if (songLowercase == 'roses')
@@ -2386,7 +2387,7 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 
-			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+			openSubState(new gameplay.GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 
 			#if windows
 			// Game Over doesn't get his own variable because it's only used here
@@ -2408,7 +2409,7 @@ class PlayState extends MusicBeatState
 					vocals.stop();
 					FlxG.sound.music.stop();
 		
-					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+					openSubState(new gameplay.GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		
 					#if windows
 					// Game Over doesn't get his own variable because it's only used here
@@ -3949,7 +3950,7 @@ class PlayState extends MusicBeatState
 
 			case 'limo':
 				if(FlxG.save.data.distractions){
-					grpLimoDancers.forEach(function(dancer:BackgroundDancer)
+					grpLimoDancers.forEach(function(dancer:	gameplay.BackgroundDancer)
 						{
 							dancer.dance();
 						});

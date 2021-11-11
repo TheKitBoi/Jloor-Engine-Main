@@ -184,6 +184,8 @@ class PlayState extends MusicBeatState
 	var upperBoppers:FlxSprite;
 	var bottomBoppers:FlxSprite;
 	var santa:FlxSprite;
+	var gfPixel:FlxSprite;
+	var danceLeft:Bool = false;
 
 	var fc:Bool = true;
 
@@ -737,6 +739,40 @@ class PlayState extends MusicBeatState
 	
 						add(stageCurtains);
 				}
+			case 'stagePixel':
+				{
+						defaultCamZoom = 0.9;
+						curStage = 'stagePixel';
+						var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
+						bg.antialiasing = true;
+						bg.scrollFactor.set(0.9, 0.9);
+						bg.active = false;
+						add(bg);
+	
+						var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
+						stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+						stageFront.updateHitbox();
+						stageFront.antialiasing = true;
+						stageFront.scrollFactor.set(0.9, 0.9);
+						stageFront.active = false;
+						add(stageFront);
+	
+						var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
+						stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+						stageCurtains.updateHitbox();
+						stageCurtains.antialiasing = true;
+						stageCurtains.scrollFactor.set(1.3, 1.3);
+						stageCurtains.active = false;
+						add(stageCurtains);
+
+						gfPixel = new FlxSprite(200, 430);
+						gfPixel.frames = Paths.getSparrowAtlas('characters/gfPixel');
+						gfPixel.animation.addByIndices('danceLeft', 'GF IDLE', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+						gfPixel.animation.addByIndices('danceRight', 'GF IDLE', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+						gfPixel.setGraphicSize(Std.int(gfPixel.width * PlayState.daPixelZoom));
+						gfPixel.antialiasing = false;
+						add(gfPixel);
+				}
 			default:
 			{
 					defaultCamZoom = 0.9;
@@ -857,6 +893,10 @@ class PlayState extends MusicBeatState
 			case 'mallEvil':
 				boyfriend.x += 320;
 				dad.y -= 80;
+			case 'stagePixel':
+				gf.x = 900;
+				dad.y = 600;
+				dad.x = 500;
 			case 'school':
 				boyfriend.x += 200;
 				boyfriend.y += 220;
@@ -2295,6 +2335,9 @@ class PlayState extends MusicBeatState
 						camFollow.x = dad.getMidpoint().x - 100;
 					case 'senpai-angry':
 						camFollow.y = dad.getMidpoint().y - 430;
+						camFollow.x = dad.getMidpoint().x - 100;
+					case 'bf-pixel-opponent':
+						camFollow.y = dad.getMidpoint().y - 230;
 						camFollow.x = dad.getMidpoint().x - 100;
 				}
 
@@ -3945,6 +3988,16 @@ class PlayState extends MusicBeatState
 					upperBoppers.animation.play('bop', true);
 					bottomBoppers.animation.play('bop', true);
 					santa.animation.play('idle', true);
+				}
+
+			case 'stagePixel':
+				{
+					danceLeft = !danceLeft;
+
+					if (danceLeft)
+						gfPixel.animation.play('danceRight');
+					else
+						gfPixel.animation.play('danceLeft');
 				}
 
 			case 'limo':

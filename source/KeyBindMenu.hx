@@ -53,6 +53,10 @@ class KeyBindMenu extends FlxSubState
 
     var blackBox:FlxSprite;
     var infoText:FlxText;
+    var noteLEFT:FlxSprite;
+    var noteUP:FlxSprite;
+    var noteDOWN:FlxSprite;
+    var noteRIGHT:FlxSprite;
 
     var state:String = "select";
 
@@ -86,6 +90,34 @@ class KeyBindMenu extends FlxSubState
         blackBox = new FlxSprite(0,0).makeGraphic(FlxG.width,FlxG.height,FlxColor.BLACK);
         add(blackBox);
 
+        noteLEFT = new FlxSprite(280, 75);
+        noteLEFT.frames = Paths.getSparrowAtlas('noteBinds', 'shared');
+        noteLEFT.antialiasing = true;
+        noteLEFT.animation.addByPrefix('arrowLEFT', 'arrowLEFT', 1);
+        noteLEFT.animation.play('arrowLEFT');
+		add(noteLEFT);
+
+        noteRIGHT = new FlxSprite(880, 75);
+        noteRIGHT.frames = Paths.getSparrowAtlas('noteBinds', 'shared');
+        noteRIGHT.antialiasing = true;
+        noteRIGHT.animation.addByPrefix('arrowRIGHT', 'arrowRIGHT', 1);
+        noteRIGHT.animation.play('arrowRIGHT');
+		add(noteRIGHT);
+
+        noteUP = new FlxSprite(480, 75);
+        noteUP.frames = Paths.getSparrowAtlas('noteBinds', 'shared');
+        noteUP.antialiasing = true;
+        noteUP.animation.addByPrefix('arrowUP', 'arrowUP', 1);
+        noteUP.animation.play('arrowUP');
+		add(noteUP);
+
+        noteDOWN = new FlxSprite(680, 75);
+        noteDOWN.frames = Paths.getSparrowAtlas('noteBinds', 'shared');
+        noteDOWN.antialiasing = true;
+        noteDOWN.animation.addByPrefix('arrowDOWN', 'arrowDOWN', 1);
+        noteDOWN.animation.play('arrowDOWN');
+		add(noteDOWN);
+
         infoText = new FlxText(-10, 580, 1280, 'Current Mode: ${KeyBinds.gamepad ? 'GAMEPAD' : 'KEYBOARD'}. Press TAB to switch\n(${KeyBinds.gamepad ? 'RIGHT Trigger' : 'Escape'} to save, ${KeyBinds.gamepad ? 'LEFT Trigger' : 'Backspace'} to leave without saving. ${KeyBinds.gamepad ? 'START To change a keybind' : ''})', 72);
 		infoText.scrollFactor.set(0, 0);
 		infoText.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -96,9 +128,17 @@ class KeyBindMenu extends FlxSubState
         add(infoText);
         add(keyTextDisplay);
 
+        noteLEFT.alpha = 0;
+        noteRIGHT.alpha = 0;
+        noteDOWN.alpha = 0;
+        noteUP.alpha = 0;
         blackBox.alpha = 0;
         keyTextDisplay.alpha = 0;
 
+        FlxTween.tween(noteLEFT, {alpha: 1}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteRIGHT, {alpha: 1}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteDOWN, {alpha: 1}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteUP, {alpha: 1}, 1, {ease: FlxEase.expoInOut});
         FlxTween.tween(keyTextDisplay, {alpha: 1}, 1, {ease: FlxEase.expoInOut});
         FlxTween.tween(infoText, {alpha: 1}, 1.4, {ease: FlxEase.expoInOut});
         FlxTween.tween(blackBox, {alpha: 0.7}, 1, {ease: FlxEase.expoInOut});
@@ -313,6 +353,10 @@ class KeyBindMenu extends FlxSubState
         FlxTween.tween(keyTextDisplay, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
         FlxTween.tween(blackBox, {alpha: 0}, 1.1, {ease: FlxEase.expoInOut, onComplete: function(flx:FlxTween){close();}});
         FlxTween.tween(infoText, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteLEFT, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteRIGHT, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteDOWN, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
+        FlxTween.tween(noteUP, {alpha: 0}, 1, {ease: FlxEase.expoInOut});
     }
 
 

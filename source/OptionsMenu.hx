@@ -2,6 +2,7 @@ package;
 
 import flixel.input.gamepad.FlxGamepad;
 import flixel.tweens.FlxEase;
+import flixel.util.FlxTimer;
 import flixel.tweens.FlxTween;
 import openfl.Lib;
 import Options;
@@ -164,10 +165,12 @@ class OptionsMenu extends MusicBeatState
 				}
 			}
 			
-			if (FlxG.keys.justPressed.UP)
+			if (FlxG.keys.justPressed.UP){
 				changeSelection(-1);
-			if (FlxG.keys.justPressed.DOWN)
+			}
+			if (FlxG.keys.justPressed.DOWN){
 				changeSelection(1);
+			}
 			
 			if (isCat)
 			{

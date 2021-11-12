@@ -1320,6 +1320,16 @@ class PlayState extends MusicBeatState
 				}
 			}
 
+			if (curSong == 'Test')
+				{
+					danceLeft = !danceLeft;
+
+					if (danceLeft)
+						gfPixel.animation.play('danceRight');
+					else
+						gfPixel.animation.play('danceLeft');
+				}
+
 			switch (swagCounter)
 
 			{
@@ -1769,7 +1779,7 @@ class PlayState extends MusicBeatState
 					if (player == 0)
 						babyArrow.frames = Paths.getSparrowAtlas('notes/' + dad.noteSkin, 'shared');
 					else if (player == 2) 
-						babyArrow.frames = Paths.getSparrowAtlas('notes/cerbera', 'shared');
+						babyArrow.frames = Paths.getSparrowAtlas('notes/pixels', 'shared');
 					else 
 						babyArrow.frames = Paths.getSparrowAtlas('notes/' + boyfriend.noteSkin, 'shared');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');

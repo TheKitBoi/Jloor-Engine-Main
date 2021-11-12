@@ -221,24 +221,24 @@ class FreeplayState extends MusicBeatState
 		{
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 
+			for (x in 0...grpSongs.length)
+				{
+					FlxTween.tween(grpSongs.members[x], {x: grpSongs.members[x].x - 400}, 0.5, {ease: FlxEase.backIn});
+					FlxTween.tween(grpSongs.members[x], {alpha: 0.0}, 0.5, {ease: FlxEase.quadIn});
+				}
+
+			for (x in 0...iconArray.length)
+				{
+					FlxTween.tween(iconArray[x], {x: iconArray[x].x - 400}, 0.5, {ease: FlxEase.backIn});
+					FlxTween.tween(iconArray[x], {alpha: 0.0}, 0.5, {ease: FlxEase.quadIn});
+				}
+
+			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+
+			trace(poop);
+			
 		new FlxTimer().start(0.6, function (tmrr:FlxTimer)
 			{
-				for (x in 0...grpSongs.length)
-					{
-						FlxTween.tween(grpSongs.members[x], {x: grpSongs.members[x].x - 400}, 0.5, {ease: FlxEase.backIn});
-						FlxTween.tween(grpSongs.members[x], {alpha: 0.0}, 0.5, {ease: FlxEase.quadIn});
-					}
-
-				for (x in 0...iconArray.length)
-					{
-						FlxTween.tween(iconArray[x], {x: iconArray[x].x - 400}, 0.5, {ease: FlxEase.backIn});
-						FlxTween.tween(iconArray[x], {alpha: 0.0}, 0.5, {ease: FlxEase.quadIn});
-					}
-
-				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
-
-				trace(poop);
-				
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				PlayState.isStoryMode = false;
 				PlayState.storyDifficulty = curDifficulty;

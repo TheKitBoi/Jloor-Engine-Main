@@ -38,7 +38,18 @@ class FreeplayState extends MusicBeatState
 	var intendedScore:Int = 0;
 	var combo:String = '';
 	var bg:FlxSprite;
+	var ohyeah = 0;
+	var musicoptimizationon:Bool = false;
 	
+
+	var musicoptimization:Array<String> = [ 
+	"Tutorial", "Bopeebo", "Fresh", "Dad battle",
+	"Spookeez", "South", "Monster",
+	"Pico", "Philly Nice", "Blammed",
+	"Satin Panties", "High", "Milf",
+	"Cocoa", "Eggnog", "Winter Horrorland",
+	"Senpai", "Roses", "Thorns",
+	"Test"								  ];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -53,6 +64,9 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
+		if(!musicoptimizationon){  #if sys sys.thread.Thread.create(() -> { #end
+			loadingMusic(); #if sys }); #end }
+
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
 
 		for (i in 0...initSonglist.length)
@@ -325,6 +339,12 @@ class FreeplayState extends MusicBeatState
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+	}
+
+	function loadingMusic(){
+        for(x in musicoptimization){ FlxG.sound.cache(Paths.inst(x)); FlxG.sound.cache(Paths.voices(x));
+            ohyeah++;
+        }
 	}
 }
 

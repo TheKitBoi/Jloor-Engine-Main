@@ -66,6 +66,11 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
+
 			case 'gf-christmas':
 				iconColor = 'FFa5004d';
 				tex = Paths.getSparrowAtlas('characters/gfChristmas');
@@ -98,6 +103,11 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
+
 			case 'gf-car':
 				tex = Paths.getSparrowAtlas('characters/gfCar');
 				frames = tex;
@@ -111,6 +121,10 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'gf-pixel':
 				tex = Paths.getSparrowAtlas('characters/gfPixel');
 				frames = tex;
@@ -129,7 +143,6 @@ class Character extends FlxSprite
 
 			case 'dad':
 				noteSkin = 'normal';
-				// DAD ANIMATION LOADING CODE
 				iconColor = 'FFaf66ce';
 				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST', 'shared');
 				frames = tex;
@@ -146,6 +159,11 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 0, -30);
 
 				playAnim('idle');
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'spooky':
 				noteSkin = 'normal';
 				iconColor = 'FFd57e00';
@@ -167,6 +185,11 @@ class Character extends FlxSprite
 				addOffset("singDOWN", -50, -130);
 
 				playAnim('danceRight');
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'mom':
 				noteSkin = 'normal';
 				iconColor = 'FFd8558e';
@@ -189,6 +212,10 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'mom-car':
 				noteSkin = 'normal';
 				iconColor = 'FFd8558e';
@@ -208,6 +235,11 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 20, -160);
 
 				playAnim('idle');
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'monster':
 				noteSkin = 'normal';
 				iconColor = 'FFf3ff6e';
@@ -225,6 +257,11 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -30, -40);
 				playAnim('idle');
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'monster-christmas':
 				noteSkin = 'normal';
 				iconColor = 'FFf3ff6e';
@@ -242,6 +279,11 @@ class Character extends FlxSprite
 				addOffset("singLEFT", -30);
 				addOffset("singDOWN", -40, -94);
 				playAnim('idle');
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'pico':
 				noteSkin = 'normal';
 				iconColor = 'FFb7d855';
@@ -283,6 +325,10 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'bf':
 				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
@@ -326,7 +372,12 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+				antialiasing = true;
 
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'bf-christmas':
 				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
@@ -357,6 +408,10 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'bf-car':
 				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
@@ -384,6 +439,11 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 			case 'bf-pixel':
 				//noteSkin = 'normal';
 				iconColor = 'FF00d8f9';
@@ -567,6 +627,11 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 		}
 
 		dance();

@@ -39,15 +39,13 @@ class LoadReplayState extends MusicBeatState
 
         controlsStrings.sort(Reflect.compare);
 
-        addWeek(['Bopeebo', 'Fresh', 'Dadbattle'], 1, ['dad']);
+		//Weeks 
+        addWeek(['Bopeebo', 'Fresh', 'Dad-Battle'], 1, ['dad']);
         addWeek(['Spookeez', 'South', 'Monster'], 2, ['spooky']);
-        addWeek(['Pico', 'Philly', 'Blammed'], 3, ['pico']);
-
+        addWeek(['Pico', 'Philly-Nice', 'Blammed'], 3, ['pico']);
         addWeek(['Satin-Panties', 'High', 'Milf'], 4, ['mom']);
-        addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
-        
+        addWeek(['Cocoa', 'Eggnog', 'Winter-Horrorland'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']); 
         addWeek(['Senpai', 'Roses', 'Thorns'], 6, ['senpai', 'senpai', 'spirit']);
-
 
         for(i in 0...controlsStrings.length)
         {
@@ -153,13 +151,6 @@ class LoadReplayState extends MusicBeatState
 
 					// adjusting the song name to be compatible
 					var songFormat = StringTools.replace(PlayState.rep.replay.songName, " ", "-");
-					switch (songFormat) {
-						case 'Dad-Battle': songFormat = 'Dadbattle';
-						case 'Philly-Nice': songFormat = 'Philly';
-						// Replay v1.0 support
-						case 'dad-battle': songFormat = 'Dadbattle';
-						case 'philly-nice': songFormat = 'Philly';
-					}
 
 					var poop:String = Highscore.formatSong(songFormat, PlayState.rep.replay.songDiff);
 

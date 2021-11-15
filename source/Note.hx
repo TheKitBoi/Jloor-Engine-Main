@@ -113,6 +113,11 @@ class Note extends FlxSprite
 					setGraphicSize(Std.int(width * 0.7));
 					updateHitbox();
 					antialiasing = true;
+
+					if (FlxG.save.data.antialiasing)
+					{
+						antialiasing = false;
+					}
 				}
 		
 				loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels','week6'), true, 17, 17);
@@ -178,6 +183,11 @@ class Note extends FlxSprite
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = true;
+
+				if (FlxG.save.data.antialiasing)
+				{
+					antialiasing = false;
+				}
 		}
 
 		switch (noteType) {

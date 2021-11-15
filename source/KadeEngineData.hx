@@ -88,11 +88,20 @@ class KadeEngineData
 		if (FlxG.save.data.timeSong == null)
 			FlxG.save.data.timeSong = true;
 
+		if (FlxG.save.data.noteSplashdad == null)
+			FlxG.save.data.noteSplashdad = true;
+		
+		if (FlxG.save.data.noteSplashboyfriend == null)
+			FlxG.save.data.noteSplashboyfriend = true;
+
 		if (FlxG.save.data.inputShow == null)
 			FlxG.save.data.inputShow = false;
 
 		if (FlxG.save.data.optimize == null)
 			FlxG.save.data.optimize = false;
+
+		if (FlxG.save.data.antialiasing == null)
+			FlxG.save.data.antialiasing = false;
 		
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		

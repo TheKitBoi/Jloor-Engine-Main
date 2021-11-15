@@ -258,10 +258,6 @@ class ModchartState
 		#if sys
 		// pre lowercasing the song name (makeAnimatedLuaSprite)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-		switch (songLowercase) {
-			case 'dad-battle': songLowercase = 'dadbattle';
-			case 'philly-nice': songLowercase = 'philly';
-		}
 
 		var data:BitmapData = BitmapData.fromFile(Sys.getCwd() + "assets/data/" + songLowercase + '/' + spritePath + ".png");
 
@@ -292,10 +288,6 @@ class ModchartState
 		#if sys
 		// pre lowercasing the song name (makeLuaSprite)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-		switch (songLowercase) {
-			case 'dad-battle': songLowercase = 'dadbattle';
-			case 'philly-nice': songLowercase = 'philly';
-		}
 
 		var data:BitmapData = BitmapData.fromFile(Sys.getCwd() + "assets/data/" + songLowercase + '/' + spritePath + ".png");
 
@@ -362,10 +354,6 @@ class ModchartState
 
 				// pre lowercasing the song name (new)
 				var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-				switch (songLowercase) {
-					case 'dad-battle': songLowercase = 'dadbattle';
-					case 'philly-nice': songLowercase = 'philly';
-				}
 
 				var result = LuaL.dofile(lua, Paths.lua(songLowercase + "/modchart")); // execute le file
 	

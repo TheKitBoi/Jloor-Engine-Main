@@ -22,6 +22,9 @@ class Alphabet extends FlxSpriteGroup
 	// for menu shit
 	public var targetY:Float = 0;
 	public var isMenuItem:Bool = false;
+	public var fade:Bool = false;
+
+	public var selected:Bool = false;
 
 	public var text:String = "";
 
@@ -251,12 +254,28 @@ class Alphabet extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
+
+		var coolThing:Float = 0.0;
+
+		if (selected)
+			coolThing = 80;
+		else
+			coolThing = 0;
+
 		if (isMenuItem)
 		{
-			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
-
-			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.30);
-			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.30);
+			if (!fade)
+				{
+					var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
+	
+					y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16 * (60 / Main.framerate));
+					x = FlxMath.lerp(x, (targetY * 20) + 90 + coolThing, 0.16 * (60 / Main.framerate));
+				}
+				else
+				{
+					x = FlxMath.lerp(x, -FlxG.width + (FlxG.width / 6), 0.2);
+					alpha -= 0.079;
+				}
 		}
 
 		super.update(elapsed);
@@ -280,6 +299,10 @@ class AlphaCharacter extends FlxSprite
 		frames = tex;
 
 		antialiasing = true;
+		if (FlxG.save.data.antialiasing)
+		{
+			antialiasing = false;
+		}
 	}
 
 	public function createBold(letter:String)

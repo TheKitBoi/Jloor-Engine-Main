@@ -201,6 +201,66 @@ class TimeSong extends Option
 	}
 }
 
+class SplashesBoyfriend extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.noteSplashboyfriend = !FlxG.save.data.noteSplashboyfriend;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Splashes BF " + (!FlxG.save.data.noteSplashboyfriend ? "off" : "on");
+	}
+}
+
+class SplashesDad extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.noteSplashdad = !FlxG.save.data.noteSplashdad;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Splashes Enemy " + (!FlxG.save.data.noteSplashdad ? "off" : "on");
+	}
+}
+
+class Antialiasing extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.antialiasing = !FlxG.save.data.antialiasing;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Antialiasing " + (!FlxG.save.data.antialiasing ? "true" : "false");
+	}
+}
+
 class DistractionsAndEffectsOption extends Option
 {
 	public function new(desc:String)

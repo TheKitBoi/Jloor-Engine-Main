@@ -1,4 +1,5 @@
 import flixel.FlxG;
+import flixel.util.FlxColor;
 
 class Ratings
 {
@@ -12,14 +13,16 @@ class Ratings
             ranking = "Rank: [FC]";
         else if (PlayState.misses == 0 && PlayState.bads == 0 && PlayState.shits == 0 && PlayState.goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
             ranking = "Rank: [S+]";
-        else if (PlayState.misses == 0) // Regular FC
+        else if (PlayState.misses == 0) // Regular S
             ranking = "Rank: [S]";
-        else if (PlayState.misses < 10) // Single Digit Combo Breaks
-            ranking = "Rank: [F]";
+        else if (PlayState.misses == 1) // 1 Miss
+            ranking = "Rank: [A]";
+        else if (PlayState.misses < 6) // 6 Misses
+            ranking = "Rank: [B]";
+        else if (PlayState.misses < 11) // 11 Misses
+            ranking = "Rank: [C]";
         else
-            ranking = "Rank: [E]";
-
-        // WIFE TIME :)))) (based on Wife3)
+            ranking = "Rank: [F]";
 
         var wifeConditions:Array<Bool> = [
             accuracy >= 99.9935, // AAAAA
@@ -135,7 +138,7 @@ class Ratings
         (FlxG.save.data.npsDisplay ? "NPS: " + nps + " (Max " + maxNPS + ")" + (!FlxG.save.data.botplay ? " | " : "") : "") + (!FlxG.save.data.botplay ?	// NPS Toggle
         "Score:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + 									// Score
         " | Misses:" + PlayState.misses + 																				// Misses/Combo Breaks
-        " | Accuracy:" + (FlxG.save.data.botplay ? "N/A" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// Accuracy
+        " | Accuracy:" + (FlxG.save.data.botplay ? "?" : HelperFunctions.truncateFloat(accuracy, 2) + " %") +  				// Accuracy
         " | " + GenerateLetterRank(accuracy) : ""); 																			// Letter Rank
     }
 }

@@ -22,7 +22,11 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
-	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
+	var menuItems:Array<String> = ['Resume', 'Restart Song', 'BotPlay', 'Exit to menu'];
+	#if debug
+	menuItems.push('BotPlay');
+	#end
+
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
@@ -128,10 +132,6 @@ class PauseSubState extends MusicBeatSubstate
 
 		// pre lowercasing the song name (update)
 		var songLowercase = StringTools.replace(PlayState.SONG.song, " ", "-").toLowerCase();
-		switch (songLowercase) {
-			case 'dad-battle': songLowercase = 'dadbattle';
-			case 'philly-nice': songLowercase = 'philly';
-		}
 		var songPath = 'assets/data/' + songLowercase + '/';
 
 		if (upP)
@@ -156,7 +156,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Restart Song', 'Exit to menu'];
+					menuItems = ['Resume', 'Restart Song', 'BotPlay', 'Exit to menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -181,7 +181,7 @@ class PauseSubState extends MusicBeatSubstate
 				{
 					grpMenuShit.clear();
 
-					menuItems = ['Resume', 'Restart Song', 'Exit to menu'];
+					menuItems = ['Resume', 'Restart Song', 'BotPlay', 'Exit to menu'];
 
 					for (i in 0...menuItems.length)
 					{
@@ -215,6 +215,13 @@ class PauseSubState extends MusicBeatSubstate
 						PlayState.instance.removedVideo = true;
 					}
 					FlxG.resetState();
+				case 'BotPlay':
+					if (FlxG.save.data.botplay == null)
+						FlxG.save.data.botplay = true;
+					else
+						FlxG.save.data.botplay = !FlxG.save.data.botplay;
+
+					LoadingState.loadAndSwitchState(new PlayState());
 				case "Exit to menu":
 					if (PlayState.instance.useVideo)
 					{
@@ -239,7 +246,14 @@ class PauseSubState extends MusicBeatSubstate
 					if (FlxG.save.data.fpsCap > 290)
 						(cast (Lib.current.getChildAt(0), Main)).setFPSCap(290);
 					
-					FlxG.switchState(new MainMenuState());
+					if (PlayState.isStoryMode)
+						FlxG.switchState(new StoryMenuState());
+					else if (!PlayState.isStoryMode)
+						FlxG.switchState(new FreeplayState());
+					else
+					{
+						FlxG.switchState(new MainMenuState());
+					}
 			}
 		}
 

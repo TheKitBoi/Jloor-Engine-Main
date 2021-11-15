@@ -4,6 +4,7 @@ import flixel.input.gamepad.FlxGamepad;
 import flash.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.FlxObject;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.addons.display.FlxGridOverlay;
@@ -38,19 +39,21 @@ class FreeplayState extends MusicBeatState
 	var intendedScore:Int = 0;
 	var combo:String = '';
 	var bg:FlxSprite;
-	var ohyeah = 0;
-	var musicoptimizationon:Bool = false;
-	
+	var ohYeah = 0;
+	var musicOptimizationOn:Bool = false;
+	var camFollow:FlxObject;
+	var totalText:FlxText;
+	//var iconP2:HealthIcon;
 
-	var musicoptimization:Array<String> = [ 
-	"Tutorial", "Bopeebo", "Fresh", "Dad battle",
+	var musicOptimization:Array<String> = [ 
+	"Tutorial", "Bopeebo", "Fresh", "Dad-Battle",
 	"Spookeez", "South", "Monster",
-	"Pico", "Philly Nice", "Blammed",
-	"Satin Panties", "High", "Milf",
-	"Cocoa", "Eggnog", "Winter Horrorland",
+	"Pico", "Philly-Nice", "Blammed",
+	"Satin-Panties", "High", "Milf",
+	"Cocoa", "Eggnog", "Winter-Horrorland",
 	"Senpai", "Roses", "Thorns",
-	"Test"								  ];
-
+	"Test"								  
+	];
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
 	public var bgColors:Array<String> = [
@@ -64,7 +67,7 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		if(!musicoptimizationon){  #if sys sys.thread.Thread.create(() -> { #end
+		if(!musicOptimizationOn){  #if sys sys.thread.Thread.create(() -> { #end
 			loadingMusic(); #if sys }); #end }
 
 		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
@@ -134,6 +137,11 @@ class FreeplayState extends MusicBeatState
 		scoreBG.alpha = 0.6;
 		add(scoreBG);
 
+		totalText = new FlxText(FlxG.width * 0.85, FlxG.height - 28, 0, "", 24);
+		totalText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, RIGHT, OUTLINE, FlxColor.BLACK);
+		totalText.scrollFactor.set(0, 0);
+		//add(totalText);
+
 		diffText = new FlxText(scoreText.x, scoreText.y + 36, 0, "", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
@@ -189,7 +197,10 @@ class FreeplayState extends MusicBeatState
 		if (Math.abs(lerpScore - intendedScore) <= 10)
 			lerpScore = intendedScore;
 
+		totalText.text = curSelected + 1 + " / " + songs.length + " Songs";
 		scoreText.text = "PERSONAL BEST:" + lerpScore;
+
+		//totalText.y = Math.floor(FlxMath.lerp(totalText.y, FlxG.height - 28, 0.14 * (60 / Main.framerate)));
 
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
@@ -302,7 +313,7 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		// selector.y = (70 * curSelected) + 30;
+		//camFollow.y = curSelected * 30;
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
@@ -318,6 +329,8 @@ class FreeplayState extends MusicBeatState
 
 		var bullShit:Int = 0;
 
+		totalText.y -= 25;
+
 		for (i in 0...iconArray.length)
 		{
 			iconArray[i].alpha = 0.6;
@@ -331,10 +344,12 @@ class FreeplayState extends MusicBeatState
 			bullShit++;
 
 			item.alpha = 0.6;
+			item.selected = false;
 			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)
 			{
+				item.selected = true;
 				item.alpha = 1;
 				// item.setGraphicSize(Std.int(item.width));
 			}
@@ -342,8 +357,8 @@ class FreeplayState extends MusicBeatState
 	}
 
 	function loadingMusic(){
-        for(x in musicoptimization){ FlxG.sound.cache(Paths.inst(x)); FlxG.sound.cache(Paths.voices(x));
-            ohyeah++;
+        for(x in musicOptimization){ FlxG.sound.cache(Paths.inst(x)); FlxG.sound.cache(Paths.voices(x));
+            ohYeah++;
         }
 	}
 }

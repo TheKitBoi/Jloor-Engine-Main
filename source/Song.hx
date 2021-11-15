@@ -50,9 +50,6 @@ class Song
 
 		// pre lowercasing the folder name
 		var folderLowercase = StringTools.replace(folder, " ", "-").toLowerCase();
-		switch (folderLowercase) {
-			case 'dad-battle': folderLowercase = 'dadbattle';
-		}
 		
 		trace('loading ' + folderLowercase + '/' + jsonInput.toLowerCase());
 

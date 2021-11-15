@@ -19,11 +19,11 @@ var weekData:Array<Dynamic> = [
 		
     ['Tutorial'],
 		
-    ['Bopeebo', 'Fresh', 'Dadbattle'],
+    ['Bopeebo', 'Fresh', 'Dad-Battle'],
 		
     ['Spookeez', 'South', "Monster"],
 		
-    ['Pico', 'Philly', "Blammed"],
+    ['Pico', 'Philly-Nice', "Blammed"],
 		
     ['Satin-Panties', "High", "Milf"],
 		
@@ -49,11 +49,11 @@ var weekData:Array<Dynamic> = [
 		
     ['Tutorial'],
 		
-    ['Bopeebo', 'Fresh', 'Dadbattle'],
+    ['Bopeebo', 'Fresh', 'Dad-Battle'],
 		
     ['Spookeez', 'South', "Monster"],
 		
-    ['Pico', 'Philly', "Blammed"],
+    ['Pico', 'Philly-Nice', "Blammed"],
 		
     ['Satin-Panties', "High", "Milf"],
 		

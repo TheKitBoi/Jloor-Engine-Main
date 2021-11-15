@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 
 class CharacterSetting
@@ -40,6 +41,10 @@ class MenuCharacter extends FlxSprite
 		this.flipped = flipped;
 
 		antialiasing = true;
+		if (FlxG.save.data.antialiasing)
+		{
+			antialiasing = false;
+		}
 
 		frames = Paths.getSparrowAtlas('campaign_menu_UI_characters');
 

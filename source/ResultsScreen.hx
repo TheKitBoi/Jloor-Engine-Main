@@ -180,10 +180,6 @@ class ResultsScreen extends FlxSubState
             PlayState.rep = null;
 
 			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songHighscore) {
-				case 'Dad-Battle': songHighscore = 'Dadbattle';
-				case 'Philly-Nice': songHighscore = 'Philly';
-			}
 
 			#if !switch
 			Highscore.saveScore(songHighscore, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
@@ -207,19 +203,8 @@ class ResultsScreen extends FlxSubState
             PlayState.loadRep = true;
 
             var songFormat = StringTools.replace(PlayState.rep.replay.songName, " ", "-");
-            switch (songFormat) {
-                case 'Dad-Battle': songFormat = 'Dadbattle';
-                case 'Philly-Nice': songFormat = 'Philly';
-                    // Replay v1.0 support
-                case 'dad-battle': songFormat = 'Dadbattle';
-                case 'philly-nice': songFormat = 'Philly';
-            }
 
 			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songHighscore) {
-				case 'Dad-Battle': songHighscore = 'Dadbattle';
-				case 'Philly-Nice': songHighscore = 'Philly';
-			}
 
 			#if !switch
 			Highscore.saveScore(songHighscore, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
@@ -244,10 +229,6 @@ class ResultsScreen extends FlxSubState
             PlayState.loadRep = false;
 
 			var songHighscore = StringTools.replace(PlayState.SONG.song, " ", "-");
-			switch (songHighscore) {
-				case 'Dad-Battle': songHighscore = 'Dadbattle';
-				case 'Philly-Nice': songHighscore = 'Philly';
-			}
 
 			#if !switch
 			Highscore.saveScore(songHighscore, Math.round(PlayState.instance.songScore), PlayState.storyDifficulty);
@@ -255,12 +236,6 @@ class ResultsScreen extends FlxSubState
 			#end
 
             var songFormat = StringTools.replace(PlayState.SONG.song, " ", "-");
-            switch (songFormat) {
-                case 'Dad-Battle': songFormat = 'Dadbattle';
-                case 'Philly-Nice': songFormat = 'Philly';
-                case 'dad-battle': songFormat = 'Dadbattle';
-                case 'philly-nice': songFormat = 'Philly';
-            }
 
             var poop:String = Highscore.formatSong(songFormat, PlayState.storyDifficulty);
 

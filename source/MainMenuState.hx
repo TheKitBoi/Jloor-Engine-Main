@@ -45,6 +45,10 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var boxMain:FlxSprite;
+	var tipText:FlxText;
+	var tipBackground:FlxSprite;
+	var tipTextMargin:Float = 10;
+	var tipTextScrolling:Bool = false;
 	public static var finishedFunnyMove:Bool = false;
 
 	override function create()
@@ -89,6 +93,10 @@ class MainMenuState extends MusicBeatState
 		boxMain.animation.addByPrefix('idle', 'beat', 15, true);
 		boxMain.animation.play('idle');
 		boxMain.antialiasing = true;
+		if (FlxG.save.data.antialiasing)
+		{
+			boxMain.antialiasing = false;
+		}
 		boxMain.scale.set(0.55, 0.55);
 		add(boxMain);
 
@@ -109,6 +117,10 @@ class MainMenuState extends MusicBeatState
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set();
 			menuItem.antialiasing = true;
+			if (FlxG.save.data.antialiasing)
+			{
+				menuItem.antialiasing = false;
+			}
 			if (firstStart)
 				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
 					{ 
@@ -133,6 +145,20 @@ class MainMenuState extends MusicBeatState
 		versionFNF.setFormat("VCR OSD Mono", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionFNF);
 
+		tipBackground = new FlxSprite();
+		tipBackground.scrollFactor.set();
+		tipBackground.alpha = 0.7;
+		add(tipBackground);
+
+		tipText = new FlxText(0, 0, 0,
+			"Welcome to Friday Night Funkin 'Jloor Engine! This is an Engine made from Kade Engine!, but still there are totally new things and the Engine will try to be as Customizable as possible. Please support KadeDev and the Creators of Friday Night Funkin' from the Donate button Thank you!");
+		tipText.scrollFactor.set();
+		tipText.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, LEFT);
+		tipText.updateHitbox();
+		add(tipText);
+
+		tipBackground.makeGraphic(FlxG.width, Std.int((tipTextMargin * 2) + tipText.height), FlxColor.BLACK);
+
 		// NG.core.calls.event.logEvent('swag').send();
 
 
@@ -142,6 +168,7 @@ class MainMenuState extends MusicBeatState
 			controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
 
 		changeItem();
+		tipTextStartScrolling();
 
 		super.create();
 	}
@@ -150,6 +177,16 @@ class MainMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+		if (tipTextScrolling)
+		{
+			tipText.x -= elapsed * 130;
+			if (tipText.x < -tipText.width)
+			{
+				tipTextScrolling = false;
+				tipTextStartScrolling();
+			}
+		}
+
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
@@ -243,6 +280,21 @@ class MainMenuState extends MusicBeatState
 		menuItems.forEach(function(spr:FlxSprite)
 		{
 			spr.screenCenter(X);
+		});
+	}
+
+	function tipTextStartScrolling()
+	{
+		tipText.x = tipTextMargin;
+		tipText.y = -tipText.height;
+
+		new FlxTimer().start(1.0, function(timer:FlxTimer)
+		{
+			FlxTween.tween(tipText, {y: tipTextMargin}, 0.3);
+			new FlxTimer().start(2.25, function(timer:FlxTimer)
+			{
+				tipTextScrolling = true;
+			});
 		});
 	}
 	

@@ -45,6 +45,8 @@ class TitleState extends MusicBeatState
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
 
+	var coolBool:Bool = false;
+
 	var curWacky:Array<String> = [];
 
 	var wackyImage:FlxSprite;
@@ -166,7 +168,10 @@ class TitleState extends MusicBeatState
 		Conductor.changeBPM(120);
 		persistentUpdate = true;
 
-		logoBl = new FlxSprite(-150, -45);
+		var bgMenu:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('titleBg'));
+		add(bgMenu);
+
+		logoBl = new FlxSprite(420, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
@@ -174,8 +179,7 @@ class TitleState extends MusicBeatState
 		logoBl.updateHitbox();
 		add(logoBl);
 
-
-		gfDance = new FlxSprite(FlxG.width * 0.4, FlxG.height * 0.07);
+		gfDance = new FlxSprite(FlxG.width * 0.01, FlxG.height * 0.07);
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
@@ -189,16 +193,7 @@ class TitleState extends MusicBeatState
 		titleText.antialiasing = true;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
-		// titleText.screenCenter(X);
 		add(titleText);
-
-		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
-		logo.screenCenter();
-		logo.antialiasing = true;
-		// add(logo);
-
-		// FlxTween.tween(logoBl, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG});
-		// FlxTween.tween(logo, {y: logoBl.y + 50}, 0.6, {ease: FlxEase.quadInOut, type: PINGPONG, startDelay: 0.1});
 
 		credGroup = new FlxGroup();
 		add(credGroup);
@@ -246,6 +241,9 @@ class TitleState extends MusicBeatState
 			swagGoodArray.push(i.split('--'));
 		}
 
+		if (Date.now().toString().startsWith('2021-09-22'))
+			swagGoodArray = [['happy', 'madness day']];
+
 		return swagGoodArray;
 	}
 
@@ -257,7 +255,8 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
-		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
+		
+		coolBool = FlxG.random.bool(0.5);
 
 		if (FlxG.keys.justPressed.F)
 		{
@@ -291,10 +290,12 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if html //bootleggers please atleast link the mod to the offical download page? thanks
-			FlxG.openURL('https://gamebanana.com/mods/303790');
-			#end
 
+			FlxTween.tween(FlxG.camera, {x:-2000}, 5, {ease: FlxEase.expoInOut});
+			FlxTween.tween(gfDance, {y:2000}, 4.5, {ease: FlxEase.expoInOut});
+			FlxTween.tween(titleText, {y: 2000}, 4.5, {ease: FlxEase.expoInOut});
+			FlxTween.tween(logoBl, {y: 2000}, 4.5, {ease: FlxEase.expoInOut});
+			FlxTween.tween(bgFlash, {y: 2000}, 4.5, {ease: FlxEase.expoInOut});
 			#if !switch
 			NGio.unlockMedal(60960);
 
@@ -310,11 +311,6 @@ class TitleState extends MusicBeatState
 
 			transitioning = true;
 			// FlxG.sound.music.stop();
-
-			FlxTween.tween(bgFlash, {y: 1280}, 2, {ease: FlxEase.quadIn});
-			FlxTween.tween(logoBl, {y: 1280}, 2, {ease: FlxEase.quadIn});
-			FlxTween.tween(gfDance, {y: 1280}, 2, {ease: FlxEase.quadIn});
-			FlxTween.tween(titleText, {y: 1280}, 2, {ease: FlxEase.quadIn});
 
 			new FlxTimer().start(1.5, function(tmr:FlxTimer) 
 			{
@@ -334,9 +330,19 @@ class TitleState extends MusicBeatState
 	{
 		for (i in 0...textArray.length)
 		{
+			var alsoCool:Float = (i * 60) + 200;
+
 			var money:Alphabet = new Alphabet(0, 0, textArray[i], true, false);
 			money.screenCenter(X);
-			money.y += (i * 60) + 200;
+			// dont make text appear from newgrounds logo if text is newgrounds
+			if (coolBool || textArray.contains('newgrounds'))
+				money.y = alsoCool + 15;
+			else
+				money.y = alsoCool - 15;
+
+			money.alpha = 0;
+			// money.y += (i * 60) + 200;
+			FlxTween.tween(money, {y: alsoCool, alpha: 1}, 0.3, {ease: FlxEase.quadInOut});
 			credGroup.add(money);
 			textGroup.add(money);
 		}
@@ -344,9 +350,18 @@ class TitleState extends MusicBeatState
 
 	function addMoreText(text:String)
 	{
+		var coolThingie:Float = (textGroup.length * 60) + 200;
+
 		var coolText:Alphabet = new Alphabet(0, 0, text, true, false);
 		coolText.screenCenter(X);
-		coolText.y += (textGroup.length * 60) + 200;
+		if (coolBool || text == 'newgrounds')
+			coolText.y = coolThingie - 15;
+		else
+			coolText.y = coolThingie + 15;
+
+		coolText.alpha = 0;
+		FlxTween.tween(coolText, {y: coolThingie, alpha: 1}, 0.3, {ease: FlxEase.quadInOut});
+		// coolText.y += coolThingie;
 		credGroup.add(coolText);
 		textGroup.add(coolText);
 	}
@@ -417,7 +432,7 @@ class TitleState extends MusicBeatState
 		{
 			remove(ngSpr);
 			bgFlash.alpha = 0.25;
-			FlxG.camera.flash(FlxColor.WHITE, 4);
+			FlxG.camera.flash(FlxColor.BLACK, 1);
 			remove(credGroup);
 			skippedIntro = true;
 		}

@@ -42,6 +42,10 @@ class GameOverState extends FlxTransitionableState
 			restart.updateHitbox();
 			restart.alpha = 0;
 			restart.antialiasing = true;
+			if (FlxG.save.data.antialiasing)
+			{
+				restart.antialiasing = false;
+			}
 			add(restart);
 
 		FlxG.sound.music.fadeOut(2, FlxG.sound.music.volume * 0.6);

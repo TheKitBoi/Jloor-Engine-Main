@@ -31,9 +31,6 @@ class OptionsMenu extends MusicBeatState
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
-			#if desktop
-			new FPSCapOption("Cap your FPS"),
-			#end
 			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
 			new AccuracyDOption("Change how accuracy is calculated. (Accurate = Simple, Complex = Milisecond Based)"),
 			new ResetButtonOption("Toggle pressing R to gameover."),
@@ -47,22 +44,33 @@ class OptionsMenu extends MusicBeatState
 			new RainbowFPSOption("Make the FPS Counter Rainbow"),
 			new AccuracyOption("Display accuracy information."),
 			new NPSDisplayOption("Shows your current Notes Per Second."),
-			new TimeSong("You can see how long the selected song will last."),
 			new CpuStrums("CPU's strumline lights up when a note hits it."),
+			new TimeSong("You can see how long the selected song will last."),
+			new SplashesBoyfriend("Activate or Deactivate the BF Splashes."),
+			new SplashesDad("Activate or Deactivate the Enemy Splashes."),
 			#end
 		]),
 		
 		new OptionCategory("Misc", [
 			#if desktop
 			new FPSOption("Toggle the FPS Counter"),
-			new ReplayOption("View replays"),
 			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new ScoreScreen("Show the score screen after the end of a song"),
 			new ShowInput("Display every single input in the score screen."),
-			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
 			new BotPlay("Showcase your charts and mods with autoplay."),
+		]),
+
+		new OptionCategory("Optimization", [
+			#if desktop
+			new FPSOption("Toggle the FPS Counter"),
+			#end
+			new Optimization("No backgrounds, no characters, centered notes, no player 2."),
+			new Antialiasing("Antialiasing True or False"),
+			#if desktop
+			new FPSCapOption("Cap your FPS"),
+			#end
 		])
 		
 	];

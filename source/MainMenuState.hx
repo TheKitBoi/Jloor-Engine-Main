@@ -135,12 +135,12 @@ class MainMenuState extends MusicBeatState
 
 		//FlxG.camera.follow(camFollow, null, 0.60 * (60 / FlxG.save.data.fpsCap));
 
-		var versionEngine:FlxText = new FlxText(132, FlxG.height - 50, 0, "Jloor Engine v0.0.1", 12);
+		var versionEngine:FlxText = new FlxText(132, FlxG.height - 50, 0, "Jloor Engine v1.0.5", 12);
 		versionEngine.scrollFactor.set();
 		versionEngine.setFormat("VCR OSD Mono", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionEngine);
 
-		var versionFNF:FlxText = new FlxText(132, FlxG.height - 30, 0, "Friday Night Funkin' v0.2.7", 12);
+		var versionFNF:FlxText = new FlxText(132, FlxG.height - 30, 0, "Friday Night Funkin' v2.0.7", 12);
 		versionFNF.scrollFactor.set();
 		versionFNF.setFormat("VCR OSD Mono", 18, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionFNF);

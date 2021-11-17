@@ -93,7 +93,7 @@ class TitleState extends MusicBeatState
 
 		FlxG.save.bind('funkin', 'Sector03');
 
-		KadeEngineData.initSave();
+		JloorEngineData.initSave();
 
 		Highscore.load();
 
@@ -125,6 +125,7 @@ class TitleState extends MusicBeatState
 		bgFlash = new FlxSprite(0, 0).loadGraphic(Paths.image('bgFlash'));
 		bgFlash.visible = true;
 		bgFlash.alpha = 0;
+		bgFlash.scale.set(2, 2);
 		bgFlash.updateHitbox();
 		bgFlash.antialiasing = true;
 		add(bgFlash);
@@ -152,23 +153,16 @@ class TitleState extends MusicBeatState
 			transIn = FlxTransitionableState.defaultTransIn;
 			transOut = FlxTransitionableState.defaultTransOut;
 
-			// HAD TO MODIFY SOME BACKEND SHIT
-			// IF THIS PR IS HERE IF ITS ACCEPTED UR GOOD TO GO
-			// https://github.com/HaxeFlixel/flixel-addons/pull/348
-
-			// var music:FlxSound = new FlxSound();
-			// music.loadStream(Paths.music('freakyMenu'));
-			// FlxG.sound.list.add(music);
-			// music.play();
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0); //this song prob copyrighted AF lol
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0); 
 
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}
 
-		Conductor.changeBPM(120);
+		Conductor.changeBPM(102);
 		persistentUpdate = true;
 
 		var bgMenu:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('titleBg'));
+		bgMenu.scale.set(2, 2);
 		add(bgMenu);
 
 		logoBl = new FlxSprite(420, -100);
@@ -202,10 +196,8 @@ class TitleState extends MusicBeatState
 		blackScreen = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		credGroup.add(blackScreen);
 
-		credTextShit = new Alphabet(0, 0, "ninjamuffin99\nPhantomArcade\nkawaisprite\nevilsk8er", true);
+		credTextShit = new Alphabet(0, 0, "Jloor\nManux", true);
 		credTextShit.screenCenter();
-
-		// credTextShit.alignment = CENTER;
 
 		credTextShit.visible = false;
 

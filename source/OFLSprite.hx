@@ -2,10 +2,6 @@ import flixel.util.FlxColor;
 import openfl.display.Sprite;
 import flixel.FlxSprite;
 
-/**
- * designed to draw a Open FL Sprite as a FlxSprite (to allow layering and auto sizing for haxe flixel cameras)
- * Custom made for Kade Engine
- */
 class OFLSprite extends FlxSprite
 {
     public var flSprite:Sprite;

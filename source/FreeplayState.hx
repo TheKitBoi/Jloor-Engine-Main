@@ -57,11 +57,16 @@ class FreeplayState extends MusicBeatState
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
 	public var bgColors:Array<String> = [
-		'#9d69ff',
-		'#ff5c5c',
-		'#5eff61',
-		'#ffff70',
-		'#a3fff4',
+		'#a5004d',
+		'#cc29fd',
+		'#d57e00',
+		'#f3ff6e',
+		'#b7d855',
+		'#d8558e',
+		'#ffaa6f',
+		'#ff3c6e',
+		'#7bd6f6',
+		'#ffffff'
 	];
 	private var iconArray:Array<HealthIcon> = [];
 
@@ -319,6 +324,30 @@ class FreeplayState extends MusicBeatState
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		// lerpScore = 0;
 		#end
+
+		switch(songs[curSelected].songName.toLowerCase()) 
+		{
+			case 'tutorial': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[0]));
+			case 'bopeebo' | 'fresh' | 'dad-battle' | 'cocoa' | 'eggnog':
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[1]));
+			case 'spookeez' | 'south': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[2]));
+			case 'monster' | 'winter-horrorland': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[3]));
+			case 'pico' | 'philly-nice' | 'blammed': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[4]));
+			case 'satin-panties' | 'high' | 'milf': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[5]));
+			case 'senpai' | 'roses': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[6]));
+			case 'thorns': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[7]));
+			case 'test': 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[8]));
+			default: 
+				FlxTween.color(bg, 0.1, bg.color, FlxColor.fromString(bgColors[9]));
+		}
 		
 		var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 		PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());

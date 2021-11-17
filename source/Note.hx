@@ -151,11 +151,11 @@ class Note extends FlxSprite
 						frames = Paths.getSparrowAtlas('indicators', 'shared');
 					case 'duet':
 						if (noteData == 1 || noteData == 3)
-							frames = Paths.getSparrowAtlas('notes/pixel', 'shared');
+							frames = Paths.getSparrowAtlas('notes/guitar', 'shared'); //Your Second Character
 						else
 							frames = Paths.getSparrowAtlas('notes/' + noteSkin, 'shared');
-					case 'bf-pixel-opponent':
-							frames = Paths.getSparrowAtlas('notes/pixel', 'shared');
+					case 'dad': //Your Character
+							frames = Paths.getSparrowAtlas('notes/guitar', 'shared'); //Your Notes of the Character
 					default:
 						frames = Paths.getSparrowAtlas('notes/' + noteSkin, 'shared');
 				}

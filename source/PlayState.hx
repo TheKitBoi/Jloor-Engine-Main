@@ -125,6 +125,14 @@ class PlayState extends MusicBeatState
 	public static var gf:Character;
 	public static var boyfriend:Boyfriend;
 
+	//Future
+	public static var dad2SONG:SwagSong;
+	public static var dad2:Character;
+	var hasDad2:Bool = false;
+	var usesDad2Chart:Bool = false;
+	private var dad2Notes:FlxTypedGroup<Note>;
+	public static var dad2Strums:FlxTypedGroup<FlxSprite> = null;
+
 	public var notes:FlxTypedGroup<Note>;
 	private var unspawnNotes:Array<Note> = [];
 
@@ -392,7 +400,6 @@ class PlayState extends MusicBeatState
 				case 4: stageCheck = 'limo';
 				case 5: if (songLowercase == 'winter-horrorland') {stageCheck = 'mallEvil';} else {stageCheck = 'mall';}
 				case 6: if (songLowercase == 'thorns') {stageCheck = 'schoolEvil';} else {stageCheck = 'school';}
-				case 7: if (songLowercase == 'test') {stageCheck = 'stagePixel';}
 			}
 		} else {stageCheck = SONG.stage;}
 
@@ -776,6 +783,18 @@ class PlayState extends MusicBeatState
 						gfPixel.antialiasing = false;
 						add(gfPixel);
 					}
+				case 'stageNODELETE':
+					{
+						// NO DELETE
+						defaultCamZoom = 999999.999999;
+						curStage = 'stageNODELETE';
+						var bgNODELETE:FlxSprite = new FlxSprite(999999.999999, -999999.999999).loadGraphic(Paths.image('BRUHHHH'));
+						bgNODELETE.antialiasing = true;
+						bgNODELETE.scrollFactor.set(999999.999999, 999999.999999);
+						bgNODELETE.active = false;
+						add(bgNODELETE);
+						// NO DELETE
+					}
 				case 'stage':
 					{
 						defaultCamZoom = 0.9;
@@ -915,19 +934,17 @@ class PlayState extends MusicBeatState
 			case 'senpai':
 				dad.x += 150;
 				dad.y += 360;
-				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+				camPos.set(dad.getGraphicMidpoint().x + 300 + dadnoteMovementXoffset, dad.getGraphicMidpoint().y + dadnoteMovementYoffset);
 			case 'senpai-angry':
 				dad.x += 150;
 				dad.y += 360;
-				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+				camPos.set(dad.getGraphicMidpoint().x + 300 + dadnoteMovementXoffset, dad.getGraphicMidpoint().y + dadnoteMovementYoffset);
 			case 'spirit':
 				dad.x -= 150;
 				dad.y += 100;
-				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
+				camPos.set(dad.getGraphicMidpoint().x + 300 + dadnoteMovementXoffset, dad.getGraphicMidpoint().y + dadnoteMovementYoffset);
 		}
 
-
-		
 		boyfriend = new Boyfriend(770, 450, SONG.player1);
 
 		// REPOSITIONING PER STAGE
@@ -2379,21 +2396,20 @@ class PlayState extends MusicBeatState
 				if (luaModchart != null)
 					luaModchart.executeState('playerTwoTurn', []);
 				#end
-				// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
 
 				switch (dad.curCharacter)
 				{
 					case 'mom':
-						camFollow.y = dad.getMidpoint().y;
+						camFollow.y = dad.getMidpoint().y + dadnoteMovementYoffset;
 					case 'senpai':
-						camFollow.y = dad.getMidpoint().y - 430;
-						camFollow.x = dad.getMidpoint().x - 100;
+						camFollow.y = dad.getMidpoint().y - 430 + dadnoteMovementYoffset;
+						camFollow.x = dad.getMidpoint().x - 100 + dadnoteMovementXoffset;
 					case 'senpai-angry':
-						camFollow.y = dad.getMidpoint().y - 430;
-						camFollow.x = dad.getMidpoint().x - 100;
+						camFollow.y = dad.getMidpoint().y - 430 + dadnoteMovementYoffset;
+						camFollow.x = dad.getMidpoint().x - 100 + dadnoteMovementXoffset;
 					case 'bf-pixel-opponent':
-						camFollow.y = dad.getMidpoint().y - 230;
-						camFollow.x = dad.getMidpoint().x - 100;
+						camFollow.y = dad.getMidpoint().y - 230 + dadnoteMovementYoffset;
+						camFollow.x = dad.getMidpoint().x - 100 + dadnoteMovementXoffset;
 				}
 
 				if (dad.curCharacter == 'mom')
@@ -2695,20 +2711,40 @@ class PlayState extends MusicBeatState
 							{
 								case 2:
 									dad.playAnim('singUP' + altAnim, true);
-									dadnoteMovementYoffset = -30;
+									dadnoteMovementYoffset = -50;
 									dadnoteMovementXoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										dadnoteMovementYoffset = 0;
+										dadnoteMovementXoffset = 0;
+									}
 								case 3:
 									dad.playAnim('singRIGHT' + altAnim, true);
-									dadnoteMovementXoffset = 30;
+									dadnoteMovementXoffset = 50;
 									dadnoteMovementYoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										dadnoteMovementYoffset = 0;
+										dadnoteMovementXoffset = 0;
+									}
 								case 1:
 									dad.playAnim('singDOWN' + altAnim, true);
-									dadnoteMovementYoffset = 30;
+									dadnoteMovementYoffset = 50;
 									dadnoteMovementXoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										dadnoteMovementYoffset = 0;
+										dadnoteMovementXoffset = 0;
+									}
 								case 0:
 									dad.playAnim('singLEFT' + altAnim, true);
-									dadnoteMovementXoffset = -30;
+									dadnoteMovementXoffset = -50;
 									dadnoteMovementYoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										dadnoteMovementYoffset = 0;
+										dadnoteMovementXoffset = 0;
+									}
 							}
 						}
 						
@@ -3851,21 +3887,41 @@ class PlayState extends MusicBeatState
 								case 0:
 									boyfriend.playAnim('singLEFT', true);
 							}
-						if (!curStage.startsWith('stagePixel')){
+						if (!curStage.startsWith('stageNODELETE')){
 							switch (note.noteData)
 							{
 								case 2:
-									bfnoteMovementYoffset = -30;
+									bfnoteMovementYoffset = -50;
 									bfnoteMovementXoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										bfnoteMovementYoffset = 0;
+										bfnoteMovementXoffset = 0;
+									}
 								case 3:
-									bfnoteMovementXoffset = 30;
+									bfnoteMovementXoffset = 50;
 									bfnoteMovementYoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										bfnoteMovementYoffset = 0;
+										bfnoteMovementXoffset = 0;
+									}
 								case 1:
-									bfnoteMovementYoffset = 30;
+									bfnoteMovementYoffset = 50;
 									bfnoteMovementXoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										bfnoteMovementYoffset = 0;
+										bfnoteMovementXoffset = 0;
+									}
 								case 0:
-									bfnoteMovementXoffset = -30;
+									bfnoteMovementXoffset = -50;
 									bfnoteMovementYoffset = 0;
+									if (FlxG.save.data.nocameramovement)
+									{
+										bfnoteMovementYoffset = 0;
+										bfnoteMovementXoffset = 0;
+									}
 							}
 						}
 					}

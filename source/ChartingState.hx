@@ -123,6 +123,12 @@ class ChartingState extends MusicBeatState
 		}
 		if (effectsMode == true)
 			_song = PlayState.effectSONG;
+
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg.scrollFactor.set();
+		bg.color = 0xFF222222;
+		add(bg);
+
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
 
@@ -238,7 +244,7 @@ class ChartingState extends MusicBeatState
 			saveLevel();
 		});
 
-		var reloadSong:FlxButton = new FlxButton(saveButton.x + saveButton.width + 10, saveButton.y, "Reload Audio", function()
+		var reloadSong:FlxButton = new FlxButton(saveButton.x + saveButton.width + 10, saveButton.y, "Reload AUDIO", function()
 		{
 			loadSong(_song.song);
 		});
@@ -249,7 +255,7 @@ class ChartingState extends MusicBeatState
 		});
 
 		
-		var reloadEffectsJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 100, "Reload EFFECTS", function()
+		var reloadEffectsJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 100, "Reload EFFECT", function()
 		{
 			loadEffects(_song.song.toLowerCase());
 		});
@@ -450,7 +456,7 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 		});
-		var turntoDuet:FlxButton = new FlxButton(10, 190, "make duet", function()
+		var turntoDuet:FlxButton = new FlxButton(10, 190, "Make Duet", function()
 		{
 			for (i in 0..._song.notes[curSection].sectionNotes.length)
 			{
@@ -458,16 +464,16 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 		});
-		var turntoCerb:FlxButton = new FlxButton(10, 210, "make cerb", function()
+		var turntOpponent:FlxButton = new FlxButton(10, 210, "Make Opponent", function()
 		{
 			for (i in 0..._song.notes[curSection].sectionNotes.length)
 			{
-				_song.notes[curSection].sectionNotes[i][3] = 'cerb';
+				_song.notes[curSection].sectionNotes[i][3] = 'dad';
 				updateGrid();
 			}
 		});
 
-		var turnBFtoBF:FlxButton = new FlxButton(10, 240, "make bf to bf (real)", function()
+		var turnBFtoBF:FlxButton = new FlxButton(10, 240, "Make BF to BF", function()
 		{
 			for (i in 0..._song.notes[curSection].sectionNotes.length)
 			{
@@ -505,7 +511,7 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(clearSectionButton);
 		tab_group_section.add(swapSection);
 		tab_group_section.add(turntoDuet);
-		tab_group_section.add(turntoCerb);
+		tab_group_section.add(turntOpponent);
 		tab_group_section.add(turnBFtoBF);
 
 		UI_box.addGroup(tab_group_section);
@@ -1337,7 +1343,7 @@ class ChartingState extends MusicBeatState
 		if (FlxG.keys.pressed.C)
 			noteType = 'kill';
 		if (FlxG.keys.pressed.X)
-			noteType = 'cerb';
+			noteType = 'dad';
 		if (FlxG.keys.pressed.Z)
 			noteType = 'duet';
 		if (FlxG.keys.pressed.K)

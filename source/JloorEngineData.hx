@@ -2,7 +2,7 @@ import flixel.input.gamepad.FlxGamepad;
 import openfl.Lib;
 import flixel.FlxG;
 
-class KadeEngineData
+class JloorEngineData
 {
     public static function initSave()
     {
@@ -38,7 +38,7 @@ class KadeEngineData
 			FlxG.save.data.fpsCap = 120;
 
 		if (FlxG.save.data.fpsCap > 285 || FlxG.save.data.fpsCap < 60)
-			FlxG.save.data.fpsCap = 120; // baby proof so you can't hard lock ur copy of kade engine
+			FlxG.save.data.fpsCap = 120;
 		
 		if (FlxG.save.data.scrollSpeed == null)
 			FlxG.save.data.scrollSpeed = 1;
@@ -102,6 +102,9 @@ class KadeEngineData
 
 		if (FlxG.save.data.antialiasing == null)
 			FlxG.save.data.antialiasing = false;
+
+		if (FlxG.save.data.nocameramovement == null)
+			FlxG.save.data.nocameramovement = false;
 		
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		

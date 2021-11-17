@@ -261,6 +261,26 @@ class Antialiasing extends Option
 	}
 }
 
+class NoCameraMovement extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.nocameramovement = !FlxG.save.data.nocameramovement;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "No Camera Movement " + (!FlxG.save.data.nocameramovement ? "off" : "on");
+	}
+}
+
 class DistractionsAndEffectsOption extends Option
 {
 	public function new(desc:String)

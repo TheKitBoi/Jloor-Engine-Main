@@ -4092,7 +4092,6 @@ class PlayState extends MusicBeatState
 
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
-	var spookydance:Bool = false;
 
 	override function beatHit()
 	{
@@ -4126,19 +4125,7 @@ class PlayState extends MusicBeatState
 					FlxG.log.add('CHANGED BPM!');
 				}
 		if (SONG.notes[Math.floor(curStep / 16)].mustHitSection){
-			switch(dad.curCharacter){
-				case 'spooky': 
-					if (spookydance == true){
-						spookydance = false;
-						dad.playAnim('danceRight');
-					}
-					else{
-						spookydance = true;
-						dad.playAnim('danceLeft');
-					}
-				default: 
-					dad.dance();
-				}
+				dad.dance();
 			}
 		}
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
@@ -4185,19 +4172,7 @@ class PlayState extends MusicBeatState
 		
 		if (!dad.animation.curAnim.name.startsWith("sing") && dad.canSing == true)
 		{
-			switch(dad.curCharacter){
-				case 'spooky': 
-					if (spookydance == true){
-						spookydance = false;
-						dad.playAnim('danceRight');
-					}
-					else{
-						spookydance = true;
-						dad.playAnim('danceLeft');
-					}
-				default: 
-					dad.dance();
-				}
+			dad.dance();
 		}	
 
 		if (curBeat % 8 == 7 && curSong == 'Bopeebo')

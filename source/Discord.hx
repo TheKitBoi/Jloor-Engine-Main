@@ -12,7 +12,7 @@ class DiscordClient
 	{
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			clientID: "557069829501091850", // change this to what ever the fuck you want lol
+			clientID: "915982685808250920",
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected
@@ -78,12 +78,9 @@ class DiscordClient
 			largeImageKey: 'icon',
 			largeImageText: "fridaynightfunkin",
 			smallImageKey : smallImageKey,
-			// Obtained times are in milliseconds so they are divided so Discord can use it
 			startTimestamp : Std.int(startTimestamp / 1000),
             endTimestamp : Std.int(endTimestamp / 1000)
 		});
-
-		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
 }
 #end

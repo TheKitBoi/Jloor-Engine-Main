@@ -389,20 +389,20 @@ class TitleState extends MusicBeatState
 			case 1:
 				createCoolText(['Jloor']);
 			case 3:
-				addMoreText('present');
+				addMoreText('Present');
 			case 4:
 				deleteCoolText();
 			case 5:
 				createCoolText(['Jloor Engine', 'by']);
 			case 7:
-				addMoreText('Jloor and Manux');
+				addMoreText('Jloor, Manux And Nelson');
 			case 8:
 				deleteCoolText();
 				ngSpr.visible = false;
 			case 9:
-				createCoolText([curWacky[0]]);
+				createCoolText(['Nelson']);
 			case 11:
-				addMoreText(curWacky[1]);
+				addMoreText('I love your Art');
 			case 12:
 				deleteCoolText();
 			case 13:

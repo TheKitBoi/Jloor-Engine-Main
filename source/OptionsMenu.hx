@@ -29,6 +29,7 @@ class OptionsMenu extends MusicBeatState
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
 			new DownscrollOption("Change the layout of the strumline."),
+			new MiddlescrollOption("Sets the strumline to the middle of the screen and hides the opponent's."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
 			new ScrollSpeedOption("Change your scroll speed (1 = Chart dependent)"),
@@ -38,6 +39,7 @@ class OptionsMenu extends MusicBeatState
 			new Fullscreen("Switching to Fullscreen depends on your PC"),
 			new NoCameraMovement("Remove Camera Movement (BF and Enemy)"),
 		]),
+
 		new OptionCategory("Appearance", [
 			new DistractionsAndEffectsOption("Toggle stage distractions that can hinder your gameplay."),
 			new CamZoomOption("Toggle the camera zoom in-game."),
@@ -57,10 +59,13 @@ class OptionsMenu extends MusicBeatState
 			new FPSOption("Toggle the FPS Counter"),
 			#end
 			new FlashingLightsOption("Toggle flashing lights that can cause epileptic seizures and strain."),
-			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new ScoreScreen("Show the score screen after the end of a song"),
 			new ShowInput("Display every single input in the score screen."),
 			new BotPlay("Showcase your charts and mods with autoplay."),
+		]),
+
+		new OptionCategory("Gamemodes", [
+			new FullComboMode("Only Full Combo."),
 		]),
 
 		new OptionCategory("Optimization", [

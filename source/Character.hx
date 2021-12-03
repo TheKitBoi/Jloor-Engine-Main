@@ -12,11 +12,15 @@ class Character extends FlxSprite
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 	public var canSing:Bool = true;
+	public var specialAnim:Bool = false;
+	public var danceIdle:Bool = false;
+	public var singDuration:Float = 4;
+	public var idleSuffix:String = '';
+	public var heyTimer:Float = 0;
 
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 	public var iconColor:String = "FF50a5eb";
-	public var noteSkin:String = 'normal';
 
 	public var holdTimer:Float = 0;
 
@@ -34,8 +38,6 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			case 'gf':
-				noteSkin = 'normal';
-				// GIRLFRIEND CODE
 				iconColor = 'FFa5004d';
 				tex = Paths.getSparrowAtlas('characters/GF_assets');
 				frames = tex;
@@ -143,7 +145,6 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'dad':
-				noteSkin = 'normal';
 				iconColor = 'FFaf66ce';
 				tex = Paths.getSparrowAtlas('characters/DADDY_DEAREST', 'shared');
 				frames = tex;
@@ -166,7 +167,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'spooky':
-				noteSkin = 'normal';
 				iconColor = 'FFd57e00';
 				tex = Paths.getSparrowAtlas('characters/spooky_kids_assets');
 				frames = tex;
@@ -192,7 +192,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'mom':
-				noteSkin = 'normal';
 				iconColor = 'FFd8558e';
 				tex = Paths.getSparrowAtlas('characters/Mom_Assets');
 				frames = tex;
@@ -218,7 +217,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'mom-car':
-				noteSkin = 'normal';
 				iconColor = 'FFd8558e';
 				tex = Paths.getSparrowAtlas('characters/momCar');
 				frames = tex;
@@ -242,7 +240,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'monster':
-				noteSkin = 'normal';
 				iconColor = 'FFf3ff6e';
 				tex = Paths.getSparrowAtlas('characters/Monster_Assets');
 				frames = tex;
@@ -264,7 +261,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'monster-christmas':
-				noteSkin = 'normal';
 				iconColor = 'FFf3ff6e';
 				tex = Paths.getSparrowAtlas('characters/monsterChristmas');
 				frames = tex;
@@ -286,7 +282,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'pico':
-				noteSkin = 'normal';
 				iconColor = 'FFb7d855';
 				tex = Paths.getSparrowAtlas('characters/Pico_FNF_assetss');
 				frames = tex;
@@ -331,7 +326,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'bf':
-				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
 				frames = tex;
@@ -380,7 +374,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'bf-christmas':
-				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
 				var tex = Paths.getSparrowAtlas('characters/bfChristmas');
 				frames = tex;
@@ -414,7 +407,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'bf-car':
-				noteSkin = 'normal';
 				iconColor = 'FF31b0d1';
 				var tex = Paths.getSparrowAtlas('characters/bfCar');
 				frames = tex;
@@ -446,7 +438,6 @@ class Character extends FlxSprite
 					antialiasing = false;
 				}
 			case 'bf-pixel':
-				//noteSkin = 'normal';
 				iconColor = 'FF00d8f9';
 				frames = Paths.getSparrowAtlas('characters/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -482,7 +473,6 @@ class Character extends FlxSprite
 				flipX = true;
 			
 			case 'bf-pixel-opponent':
-				//noteSkin = 'normal';
 				iconColor = 'FF00d8f9';
 				frames = Paths.getSparrowAtlas('characters/bfPixel');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -535,7 +525,6 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'senpai':
-				//noteSkin = 'normal';
 				iconColor = 'FFffaa6f';
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				animation.addByPrefix('idle', 'Senpai Idle', 24, false);
@@ -557,7 +546,6 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 			case 'senpai-angry':
-				//noteSkin = 'normal';
 				iconColor = 'FFffaa6f';
 				frames = Paths.getSparrowAtlas('characters/senpai');
 				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
@@ -579,7 +567,6 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'spirit':
-				//noteSkin = 'normal';
 				iconColor = 'FFff3c6e';
 				frames = Paths.getPackerAtlas('characters/spirit');
 				animation.addByPrefix('idle', "idle spirit_", 24, false);
@@ -602,7 +589,6 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'parents-christmas':
-				noteSkin = 'normal';
 				iconColor = 'FFaf66ce';
 				frames = Paths.getSparrowAtlas('characters/mom_dad_christmas_assets');
 				animation.addByPrefix('idle', 'Parent Christmas Idle', 24, false);
@@ -635,18 +621,22 @@ class Character extends FlxSprite
 				}
 		}
 
+		recalculateDanceIdle();
 		dance();
 
 		if (isPlayer)
 		{
 			flipX = !flipX;
 
+			// Doesn't flip for BF, since his are already in the right place???
 			if (!curCharacter.startsWith('bf'))
 			{
+				// var animArray
 				var oldRight = animation.getByName('singRIGHT').frames;
 				animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
 				animation.getByName('singLEFT').frames = oldRight;
 
+				// IF THEY HAVE MISS ANIMATIONS??
 				if (animation.getByName('singRIGHTmiss') != null)
 				{
 					var oldMiss = animation.getByName('singRIGHTmiss').frames;
@@ -659,86 +649,68 @@ class Character extends FlxSprite
 
 	override function update(elapsed:Float)
 	{
-		if (!curCharacter.startsWith('bf'))
+		if(!debugMode && animation.curAnim != null)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
+			if(heyTimer > 0)
 			{
-				holdTimer += elapsed;
-			}
-
-			var dadVar:Float = 4;
-
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+				heyTimer -= elapsed;
+				if(heyTimer <= 0)
+				{
+					if(specialAnim && animation.curAnim.name == 'hey' || animation.curAnim.name == 'cheer')
+					{
+						specialAnim = false;
+						dance();
+					}
+					heyTimer = 0;
+				}
+			} else if(specialAnim && animation.curAnim.finished)
 			{
+				specialAnim = false;
 				dance();
-				holdTimer = 0;
+			}
+
+			if (!isPlayer)
+			{
+				if (animation.curAnim.name.startsWith('sing'))
+				{
+					holdTimer += elapsed;
+				}
+
+				if (holdTimer >= Conductor.stepCrochet * 0.001 * singDuration)
+				{
+					dance();
+					holdTimer = 0;
+				}
+			}
+
+			if(animation.curAnim.finished && animation.getByName(animation.curAnim.name + '-loop') != null)
+			{
+				playAnim(animation.curAnim.name + '-loop');
 			}
 		}
-
-		switch (curCharacter)
-		{
-			case 'gf':
-				if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-					playAnim('danceRight');
-		}
-
 		super.update(elapsed);
+	}
+
+	public function recalculateDanceIdle() {
+		danceIdle = (animation.getByName('danceLeft' + idleSuffix) != null && animation.getByName('danceRight' + idleSuffix) != null);
 	}
 
 	private var danced:Bool = false;
 	public function dance()
 	{
-		if (!debugMode)
+		if (!debugMode && !specialAnim)
 		{
-			switch (curCharacter)
+			if(danceIdle)
 			{
-				case 'gf':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
+				danced = !danced;
 
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-
-				case 'gf-christmas':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-
-				case 'gf-car':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-				case 'gf-pixel':
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-
-				default:
-					playAnim('idle');
+				if (danced)
+					playAnim('danceRight' + idleSuffix);
+				else
+					playAnim('danceLeft' + idleSuffix);
+			}
+			else if(animation.getByName('idle' + idleSuffix) != null) {
+					playAnim('idle' + idleSuffix);
 			}
 		}
 	}
@@ -746,6 +718,7 @@ class Character extends FlxSprite
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
 		if (canSing){
+			specialAnim = false;
 			animation.play(AnimName, Force, Reversed, Frame);
 
 			var daOffset = animOffsets.get(AnimName);

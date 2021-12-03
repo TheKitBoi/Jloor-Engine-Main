@@ -140,6 +140,27 @@ class DownscrollOption extends Option
 	}
 }
 
+class MiddlescrollOption extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+
+	public override function press():Bool
+	{
+		FlxG.save.data.midscroll = !FlxG.save.data.midscroll;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return 'Middle Scroll ' + (FlxG.save.data.midscroll ? "on" : "off");
+	}
+}
+
 class GhostTapOption extends Option
 {
 	public function new(desc:String)
@@ -278,6 +299,25 @@ class NoCameraMovement extends Option
 	private override function updateDisplay():String
 	{
 		return "No Camera Movement " + (!FlxG.save.data.nocameramovement ? "off" : "on");
+	}
+}
+
+class FullComboMode extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.save.data.fullcombomode= !FlxG.save.data.fullcombomode;
+		display = updateDisplay();
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "Full Combo Mode " + (!FlxG.save.data.fullcombomode ? "off" : "on");
 	}
 }
 
@@ -707,28 +747,6 @@ class CustomizeGameplay extends Option
 	private override function updateDisplay():String
 	{
 		return "Customize Gameplay";
-	}
-}
-
-class WatermarkOption extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		Main.watermarks = !Main.watermarks;
-		FlxG.save.data.watermark = Main.watermarks;
-		display = updateDisplay();
-		return true;
-	}
-
-	private override function updateDisplay():String
-	{
-		return "Watermarks " + (Main.watermarks ? "on" : "off");
 	}
 }
 

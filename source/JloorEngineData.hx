@@ -12,6 +12,9 @@ class JloorEngineData
 		if (FlxG.save.data.downscroll == null)
 			FlxG.save.data.downscroll = false;
 
+		if (FlxG.save.data.midscroll == null)
+			FlxG.save.data.midscroll = false;
+
 		if (FlxG.save.data.dfjk == null)
 			FlxG.save.data.dfjk = false;
 			
@@ -51,9 +54,6 @@ class JloorEngineData
 
 		if (FlxG.save.data.accuracyMod == null)
 			FlxG.save.data.accuracyMod = 1;
-
-		if (FlxG.save.data.watermark == null)
-			FlxG.save.data.watermark = true;
 
 		if (FlxG.save.data.ghost == null)
 			FlxG.save.data.ghost = true;
@@ -105,6 +105,9 @@ class JloorEngineData
 
 		if (FlxG.save.data.nocameramovement == null)
 			FlxG.save.data.nocameramovement = false;
+
+		if(FlxG.save.data.fullcombomode = null)
+			FlxG.save.data.fullcombomode = false;
 		
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 		
@@ -113,8 +116,6 @@ class JloorEngineData
 		Conductor.recalculateTimings();
 		PlayerSettings.player1.controls.loadKeyBinds();
 		KeyBinds.keyCheck();
-
-		Main.watermarks = FlxG.save.data.watermark;
 
 		(cast (Lib.current.getChildAt(0), Main)).setFPSCap(FlxG.save.data.fpsCap);
 	}

@@ -196,6 +196,21 @@ class ChartingState extends MusicBeatState
 		UI_box.resize(300, 400);
 		UI_box.x = FlxG.width / 2;
 		UI_box.y = 20;
+
+		/*var text:String =
+		"Pressed X - Hurt Note
+		\nPressed Z - Warning Note";
+
+		var tipTextArray:Array<String> = text.split('\n');
+		for (i in 0...tipTextArray.length) {
+			var tipText:FlxText = new FlxText(UI_box.x, UI_box.y + UI_box.height + 8, 0, tipTextArray[i], 16);
+			tipText.y += i * 14;
+			tipText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT/*, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK*//*);*/
+			//tipText.borderSize = 2;
+			/*tipText.scrollFactor.set();
+			add(tipText);
+		}*/
+
 		add(UI_box);
 
 		addSongUI();
@@ -205,10 +220,8 @@ class ChartingState extends MusicBeatState
 		add(curRenderedNotes);
 		add(curRenderedSustains);
 
-		add(blackBorder);
+		//add(blackBorder);
 		add(snapText);
-
-
 
 		super.create();
 	}
@@ -252,12 +265,6 @@ class ChartingState extends MusicBeatState
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
 			loadJson(_song.song.toLowerCase());
-		});
-
-		
-		var reloadEffectsJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 100, "Reload EFFECT", function()
-		{
-			loadEffects(_song.song.toLowerCase());
 		});
 
 		
@@ -333,7 +340,7 @@ class ChartingState extends MusicBeatState
 		});
 		player1DropDown.selectedLabel = _song.player1;
 
-		var player1Label = new FlxText(10,80,64,'Player 1');
+		var player1Label = new FlxText(10,80,64,'Player');
 
 		var player2DropDown = new FlxUIDropDownMenu(140, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -341,31 +348,31 @@ class ChartingState extends MusicBeatState
 		});
 		player2DropDown.selectedLabel = _song.player2;
 
-		var player2Label = new FlxText(140,80,64,'Player 2');
+		var player2Label = new FlxText(140,80,64,'Opponent');
 
-		var gfVersionDropDown = new FlxUIDropDownMenu(10, 200, FlxUIDropDownMenu.makeStrIdLabelArray(gfVersions, true), function(gfVersion:String)
+		var gfVersionDropDown = new FlxUIDropDownMenu(10, 160, FlxUIDropDownMenu.makeStrIdLabelArray(gfVersions, true), function(gfVersion:String)
 			{
 				_song.gfVersion = gfVersions[Std.parseInt(gfVersion)];
 			});
 		gfVersionDropDown.selectedLabel = _song.gfVersion;
 
-		var gfVersionLabel = new FlxText(10,180,64,'Girlfriend');
+		var gfVersionLabel = new FlxText(10,140,64,'Girlfriend');
 
-		var stageDropDown = new FlxUIDropDownMenu(140, 200, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(stage:String)
+		var stageDropDown = new FlxUIDropDownMenu(140, 160, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(stage:String)
 			{
 				_song.stage = stages[Std.parseInt(stage)];
 			});
 		stageDropDown.selectedLabel = _song.stage;
 		
-		var stageLabel = new FlxText(140,180,64,'Stage');
+		var stageLabel = new FlxText(140,140,64,'Stage');
 
-		var noteStyleDropDown = new FlxUIDropDownMenu(10, 300, FlxUIDropDownMenu.makeStrIdLabelArray(noteStyles, true), function(noteStyle:String)
+		var noteStyleDropDown = new FlxUIDropDownMenu(10, 220, FlxUIDropDownMenu.makeStrIdLabelArray(noteStyles, true), function(noteStyle:String)
 			{
 				_song.noteStyle = noteStyles[Std.parseInt(noteStyle)];
 			});
 		noteStyleDropDown.selectedLabel = _song.noteStyle;
 
-		var noteStyleLabel = new FlxText(10,280,64,'Note Skin');
+		var noteStyleLabel = new FlxText(10,200,64,'Note Skin');
 
 		var tab_group_song = new FlxUI(null, UI_box);
 		tab_group_song.name = "Song";
@@ -376,7 +383,6 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
-		tab_group_song.add(reloadEffectsJson);
 		tab_group_song.add(loadAutosaveBtn);
 		tab_group_song.add(stepperBPM);
 		tab_group_song.add(stepperBPMLabel);
@@ -456,42 +462,9 @@ class ChartingState extends MusicBeatState
 				updateGrid();
 			}
 		});
-		var turntoDuet:FlxButton = new FlxButton(10, 190, "Make Duet", function()
-		{
-			for (i in 0..._song.notes[curSection].sectionNotes.length)
-			{
-				_song.notes[curSection].sectionNotes[i][3] = 'duet';
-				updateGrid();
-			}
-		});
-		var turntOpponent:FlxButton = new FlxButton(10, 210, "Make Opponent", function()
-		{
-			for (i in 0..._song.notes[curSection].sectionNotes.length)
-			{
-				_song.notes[curSection].sectionNotes[i][3] = 'dad';
-				updateGrid();
-			}
-		});
-
-		var turnBFtoBF:FlxButton = new FlxButton(10, 240, "Make BF to BF", function()
-		{
-			for (i in 0..._song.notes[curSection].sectionNotes.length)
-			{
-				if (_song.notes[curSection].mustHitSection) {
-					if (_song.notes[curSection].sectionNotes[i][1] <= 3 && _song.notes[curSection].sectionNotes[i][1] >= 0)
-						_song.notes[curSection].sectionNotes[i][3] = 'normal';
-				} else {
-					if (_song.notes[curSection].sectionNotes[i][1] >= 4)
-						_song.notes[curSection].sectionNotes[i][3] = 'normal';
-				}
-				
-				updateGrid();
-			}
-		});
 		check_mustHitSection = new FlxUICheckBox(10, 30, null, null, "Camera Points to P1?", 100);
 		check_mustHitSection.name = 'check_mustHit';
 		check_mustHitSection.checked = true;
-		// _song.needsVoices = check_mustHit.checked;
 
 		check_altAnim = new FlxUICheckBox(10, 400, null, null, "Alternate Animation", 100);
 		check_altAnim.name = 'check_altAnim';
@@ -510,9 +483,6 @@ class ChartingState extends MusicBeatState
 		tab_group_section.add(copyButton);
 		tab_group_section.add(clearSectionButton);
 		tab_group_section.add(swapSection);
-		tab_group_section.add(turntoDuet);
-		tab_group_section.add(turntOpponent);
-		tab_group_section.add(turnBFtoBF);
 
 		UI_box.addGroup(tab_group_section);
 	}
@@ -1331,34 +1301,11 @@ class ChartingState extends MusicBeatState
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
 		var noteSus = 0;
-		var noteType = 'normal';
-		if (FlxG.keys.pressed.M)
-			noteType = 'drop';
-		if (FlxG.keys.pressed.N)
-			noteType = 'are';
-		if (FlxG.keys.pressed.B)
-			noteType = 'you';
-		if (FlxG.keys.pressed.V)
-			noteType = 'ready';
-		if (FlxG.keys.pressed.C)
-			noteType = 'kill';
-		if (FlxG.keys.pressed.X)
-			noteType = 'dad';
-		if (FlxG.keys.pressed.Z)
-			noteType = 'duet';
-		if (FlxG.keys.pressed.K)
-			noteType = '4';
-		if (FlxG.keys.pressed.J)
-			noteType = '5';
-		if (FlxG.keys.pressed.H)
-			noteType = '6';
-		if (FlxG.keys.pressed.G)
-			noteType = '7';
 
 		if (n != null)
-			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteType]);
+			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength]);
 		else
-			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteType]);
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus]);
 
 		var thingy = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 
@@ -1402,13 +1349,6 @@ class ChartingState extends MusicBeatState
 	function loadJson(song:String):Void
 	{
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
-		LoadingState.loadAndSwitchState(new ChartingState());
-	}
-
-	function loadEffects(song:String):Void
-	{
-		//PlayState.SONG = Song.loadFromJson('effects-ex', song.toLowerCase());
-		effectsMode = true;
 		LoadingState.loadAndSwitchState(new ChartingState());
 	}
 
